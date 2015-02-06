@@ -67,6 +67,7 @@ import com.liferay.portal.model.PortletModel;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
@@ -90,7 +91,6 @@ import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.ClassLoaderReference;
 import com.thoughtworks.xstream.io.xml.XppDriver;
@@ -98,7 +98,6 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -1603,6 +1602,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Role " + roleName + " does not exist");
 				}
+
+				continue;
+			}
+
+			if (isPrivateLayout() &&
+					resourceName.equals(Layout.class.getName()) &&
+					roleName.equals(RoleConstants.GUEST)) {
 
 				continue;
 			}
