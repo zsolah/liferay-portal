@@ -97,7 +97,7 @@
 				(JournalArticle.version < tempJournalArticle.version)
 			WHERE
 				(JournalArticle.classNameId = ?) AND
-				(JournalArticle.[$STATUS$]) AND
+				[$STATUS$] AND
 				(JournalArticle.expirationDate <= ?) AND
 				(tempJournalArticle.version is NULL)
 		]]>
