@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.JspTag;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.jasper.Constants;
@@ -62,14 +63,13 @@ public class TagHandlerPool extends org.apache.jasper.runtime.TagHandlerPool {
 	}
 
 	@Override
-	public void reuse(Tag tag) {
+	public void reuse(Tag handler) {
 		if (_counter.get() < _maxSize) {
 			_counter.getAndIncrement();
 
-			_tags.offer(tag);
-		}
-		else {
-			tag.release();
+			_tags.offer((Tag) handler);
+		} else {
+			((Tag) handler).release();
 		}
 	}
 
