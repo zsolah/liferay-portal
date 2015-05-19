@@ -67,8 +67,6 @@ import net.jmge.gif.Gif89Encoder;
 
 import org.im4java.core.IMOperation;
 
-import org.monte.media.jpeg.CMYKJPEGImageReaderSpi;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
@@ -162,82 +160,6 @@ public class ImageToolImpl implements ImageTool {
 				"Unable to configure the default user male portrait: " +
 					e.getMessage());
 		}
-	}
-
-	@Override
-	public Future<RenderedImage> convertCMYKtoRGB(
-		byte[] bytes, final String type) {
-
-		ImageMagick imageMagick = getImageMagick();
-
-		if (!imageMagick.isEnabled()) {
-			return null;
-		}
-
-		File inputFile = _fileUtil.createTempFile(type);
-		final File outputFile = _fileUtil.createTempFile(type);
-
-		try {
-			_fileUtil.write(inputFile, bytes);
-
-			IMOperation imOperation = new IMOperation();
-
-			imOperation.addRawArgs("-format", "%[colorspace]");
-			imOperation.addImage(inputFile.getPath());
-
-			String[] output = imageMagick.identify(imOperation.getCmdArgs());
-
-			if ((output.length == 1) &&
-				StringUtil.equalsIgnoreCase(output[0], "CMYK")) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info("The image is in the CMYK colorspace");
-				}
-
-				imOperation = new IMOperation();
-
-				imOperation.addRawArgs("-colorspace", "RGB");
-				imOperation.addImage(inputFile.getPath());
-				imOperation.addImage(outputFile.getPath());
-
-				Future<Object> future = (Future<Object>)imageMagick.convert(
-					imOperation.getCmdArgs());
-
-				return new FutureConverter<RenderedImage, Object>(future) {
-
-					@Override
-					protected RenderedImage convert(Object obj) {
-						RenderedImage renderedImage = null;
-
-						try {
-							ImageBag imageBag = read(
-								_fileUtil.getBytes(outputFile));
-
-							renderedImage = imageBag.getRenderedImage();
-						}
-						catch (IOException ioe) {
-							if (_log.isDebugEnabled()) {
-								_log.debug("Unable to convert " + type, ioe);
-							}
-						}
-
-						return renderedImage;
-					}
-
-				};
-			}
-		}
-		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error(e, e);
-			}
-		}
-		finally {
-			_fileUtil.delete(inputFile);
-			_fileUtil.delete(outputFile);
-		}
-
-		return null;
 	}
 
 	@Override
@@ -654,49 +576,6 @@ public class ImageToolImpl implements ImageTool {
 		return scaledBufferedImage;
 	}
 
-	protected ImageMagick getImageMagick() {
-		if (_imageMagick == null) {
-			_imageMagick = ImageMagickImpl.getInstance();
-
-			_imageMagick.reset();
-		}
-
-		return _imageMagick;
-	}
-
-	protected void orderImageReaderSpis() {
-		IIORegistry defaultIIORegistry = IIORegistry.getDefaultInstance();
-
-		ImageReaderSpi firstImageReaderSpi = null;
-		ImageReaderSpi secondImageReaderSpi = null;
-
-		Iterator<ImageReaderSpi> imageReaderSpis =
-			defaultIIORegistry.getServiceProviders(ImageReaderSpi.class, true);
-
-		while (imageReaderSpis.hasNext()) {
-			ImageReaderSpi imageReaderSpi = imageReaderSpis.next();
-
-			if (imageReaderSpi instanceof CMYKJPEGImageReaderSpi) {
-				secondImageReaderSpi = imageReaderSpi;
-			}
-			else {
-				String[] formatNames = imageReaderSpi.getFormatNames();
-
-				if (ArrayUtil.contains(formatNames, TYPE_JPEG, true) ||
-					ArrayUtil.contains(formatNames, "jpeg", true)) {
-
-					firstImageReaderSpi = imageReaderSpi;
-				}
-			}
-		}
-
-		if ((firstImageReaderSpi != null) && (secondImageReaderSpi != null)) {
-			defaultIIORegistry.setOrdering(
-				ImageReaderSpi.class, firstImageReaderSpi,
-				secondImageReaderSpi);
-		}
-	}
-
 	protected byte[] toMultiByte(int intValue) {
 		int numBits = 32;
 		int mask = 0x80000000;
@@ -722,18 +601,11 @@ public class ImageToolImpl implements ImageTool {
 		return multiBytes;
 	}
 
-	private ImageToolImpl() {
-		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
-
-		orderImageReaderSpis();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);
 
 	private static final ImageTool _instance = new ImageToolImpl();
 
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
-	private static ImageMagick _imageMagick;
 
 	private Image _defaultCompanyLogo;
 	private Image _defaultOrganizationLogo;
