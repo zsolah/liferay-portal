@@ -29,14 +29,16 @@ import java.util.Set;
 public class MimeTypesUtil {
 
 	/**
-	 * Returns the content type from a byte array.
+	 * Returns the content type from the byte array and file name.
 	 *
 	 * @param  bytes the byte array of the content
+	 * @param  fileName the full name or extension of the file (e.g.,
+	 *         "Test.doc", ".doc")
 	 * @return the content type if it is a supported format or
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
-	public static String getContentType(byte[] bytes) {
-		return getMimeTypes().getContentType(bytes);
+	public static String getContentType(byte[] bytes, String fileName) {
+		return getMimeTypes().getContentType(bytes, fileName);
 	}
 
 	/**

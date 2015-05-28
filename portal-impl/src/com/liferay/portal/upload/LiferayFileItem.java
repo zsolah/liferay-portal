@@ -52,7 +52,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 
 	@Override
 	public String getContentType() {
-		return MimeTypesUtil.getContentType(get());
+		return MimeTypesUtil.getContentType(get(), getFileName());
 	}
 
 	@Override

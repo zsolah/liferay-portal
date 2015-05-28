@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
@@ -39,7 +40,6 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.tika.Tika;
 import org.apache.tika.detect.DefaultDetector;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.io.CloseShieldInputStream;
@@ -83,8 +83,14 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	}
 
 	@Override
-	public String getContentType(byte[] bytes) {
-		return new Tika().detect(bytes);
+	public String getContentType(byte[] bytes, String fileName) {
+		if (ArrayUtil.isEmpty(bytes)) {
+			return getContentType(fileName);
+		}
+
+		InputStream is = TikaInputStream.get(bytes);
+
+		return getContentType(is, fileName);
 	}
 
 	@Override

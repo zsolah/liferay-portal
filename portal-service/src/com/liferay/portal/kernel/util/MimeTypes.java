@@ -25,7 +25,7 @@ import java.util.Set;
  */
 public interface MimeTypes {
 
-	public String getContentType(byte[] bytes);
+	public String getContentType(byte[] bytes, String fileName);
 
 	public String getContentType(File file);
 
