@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
@@ -80,17 +79,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		catch (Exception e) {
 			_log.error("Unable to populate extensions map", e);
 		}
-	}
-
-	@Override
-	public String getContentType(byte[] bytes, String fileName) {
-		if (ArrayUtil.isEmpty(bytes)) {
-			return getContentType(fileName);
-		}
-
-		InputStream is = TikaInputStream.get(bytes);
-
-		return getContentType(is, fileName);
 	}
 
 	@Override
