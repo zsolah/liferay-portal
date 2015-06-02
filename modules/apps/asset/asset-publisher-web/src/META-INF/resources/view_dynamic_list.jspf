@@ -27,42 +27,18 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 	long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
 
 	if (assetVocabularyId > 0) {
-		AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
 
-		List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		results = AssetPublisherUtil.getResults(portletPreferences,assetEntryQuery,assetPublisherDisplayContext.getClassNameIds(),start,end,request,portletName);
 
-		assetEntryQuery.setClassNameIds(assetPublisherDisplayContext.getClassNameIds());
+		List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (AssetCategory assetCategory : assetCategories) {
-			assetCategory = assetCategory.toEscapedModel();
 
-			long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
-
-			long[] newAllAssetCategoryIds = ArrayUtil.append(oldAllCategoryIds, assetCategory.getCategoryId());
-
-			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
+			total = AssetPublisherUtil.getTotal(total, portletPreferences,assetEntryQuery, assetPublisherDisplayContext.getClassNameIds(), start, end, request, portletName);
 
 			int groupTotal = 0;
 
-			if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-				BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, start, end);
-
-				groupTotal = baseModelSearchResult.getLength();
-
-				total += groupTotal;
-
-				results = baseModelSearchResult.getBaseModels();
-			}
-			else {
-				groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-				total += groupTotal;
-
-				assetEntryQuery.setEnd(end);
-				assetEntryQuery.setStart(start);
-
-				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-			}
+			groupTotal = AssetPublisherUtil.getGroupTotal(assetEntryQuery, request, portletName, start, end);
 
 			if (!results.isEmpty() && (start < groupTotal)) {
 				searchContainer.setResults(results);
@@ -80,24 +56,9 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 			}
 
 			if (groupTotal > 0) {
-				if ((end > 0) && (end > groupTotal)) {
-					end -= groupTotal;
-				}
-				else {
-					end = 0;
-				}
-
-				if ((start > 0) && (start > groupTotal)) {
-					start -= groupTotal;
-				}
-				else {
-					start = 0;
-				}
+				start = AssetPublisherUtil.getLimit(groupTotal, start);
+				end = AssetPublisherUtil.getLimit(groupTotal, end);
 			}
-
-			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-			assetEntryQuery.setStart(QueryUtil.ALL_POS);
 		}
 
 		searchContainer.setTotal(total);
@@ -105,27 +66,13 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 	else if (assetVocabularyId != -1) {
 		assetEntryQuery.setClassNameIds(assetPublisherDisplayContext.getClassNameIds());
 
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, start, end);
+		total = AssetPublisherUtil.getTotal(total, assetEntryQuery, request, portletName, start, end);
 
-			total = baseModelSearchResult.getLength();
+		searchContainer.setTotal(total);
 
-			searchContainer.setTotal(total);
+		results = AssetPublisherUtil.getResults(assetEntryQuery, request, portletName, start, end);
 
-			results = baseModelSearchResult.getBaseModels();
-		}
-		else {
-			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-			searchContainer.setTotal(total);
-
-			assetEntryQuery.setEnd(end);
-			assetEntryQuery.setStart(start);
-
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-		}
-
-		if (!results.isEmpty() && (start < total)) {
+		if (!results.isEmpty() && start < total) {
 			searchContainer.setResults(results);
 
 			request.setAttribute("view.jsp-results", results);
@@ -136,7 +83,7 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 			</liferay-ui:ddm-template-renderer>
 
 <%
-		 }
+		}
 	}
 	else {
 		for (long classNameId : assetPublisherDisplayContext.getClassNameIds()) {
@@ -144,27 +91,11 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 
 			AssetRendererFactory groupAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
 
+			total = AssetPublisherUtil.getTotal(total, portletPreferences,assetPublisherDisplayContext.getAssetEntryQuery(), assetPublisherDisplayContext.getClassNameIds(), start, end, request, portletName);
+			
 			int groupTotal = 0;
-
-			if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-				BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, start, end);
-
-				groupTotal = baseModelSearchResult.getLength();
-
-				total += groupTotal;
-
-				results = baseModelSearchResult.getBaseModels();
-			}
-			else {
-				groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-				total += groupTotal;
-
-				assetEntryQuery.setEnd(end);
-				assetEntryQuery.setStart(start);
-
-				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-			}
+			
+			results = AssetPublisherUtil.getResults(assetEntryQuery,request,portletName,start,end);
 
 			searchContainer.setResults(results);
 
@@ -181,22 +112,13 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 
 <%
 			}
-
 			if (!portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT)) {
+				groupTotal = AssetPublisherUtil.getGroupTotal(assetEntryQuery, request, portletName, start, end);
+				
 				if (groupTotal > 0) {
-					if ((end > 0) && (end > groupTotal)) {
-						end -= groupTotal;
-					}
-					else {
-						end = 0;
-					}
+					start = AssetPublisherUtil.getLimit(groupTotal, start);
 
-					if ((start > 0) && (start > groupTotal)) {
-						start -= groupTotal;
-					}
-					else {
-						start = 0;
-					}
+					end = AssetPublisherUtil.getLimit(groupTotal, end);
 				}
 
 				assetEntryQuery.setEnd(QueryUtil.ALL_POS);
