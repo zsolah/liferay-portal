@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
@@ -47,13 +46,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 
 import net.jmge.gif.Gif89Encoder;
 
@@ -378,76 +372,13 @@ public class ImageToolImpl implements ImageTool {
 
 	@Override
 	public ImageBag read(byte[] bytes) throws IOException {
-		String formatName = null;
-		ImageInputStream imageInputStream = null;
-		Queue<ImageReader> imageReaders = new LinkedList<>();
-		RenderedImage renderedImage = null;
-
 		try {
-			imageInputStream = ImageIO.createImageInputStream(
-				new ByteArrayInputStream(bytes));
-
-			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
-				imageInputStream);
-
-			while ((renderedImage == null) && iterator.hasNext()) {
-				ImageReader imageReader = iterator.next();
-
-				imageReaders.offer(imageReader);
-
-				try {
-					imageReader.setInput(imageInputStream);
-
-					renderedImage = imageReader.read(0);
-				}
-				catch (IOException ioe) {
-					continue;
-				}
-
-				formatName = StringUtil.toLowerCase(
-					imageReader.getFormatName());
-			}
-
-			if (renderedImage == null) {
-				throw new IOException("Unsupported image type");
-			}
+			BufferedImage renderedImage = ImageIO.read(new ByteArrayInputStream(bytes));
+			String type = TYPE_NOT_AVAILABLE;
+			return new ImageBag(renderedImage, type);
+		} catch(IOException e) {
+			throw new RuntimeException(e);
 		}
-		finally {
-			while (!imageReaders.isEmpty()) {
-				ImageReader imageReader = imageReaders.poll();
-
-				imageReader.dispose();
-			}
-
-			if (imageInputStream != null) {
-				imageInputStream.close();
-			}
-		}
-
-		String type = TYPE_JPEG;
-
-		if (formatName.contains(TYPE_BMP)) {
-			type = TYPE_BMP;
-		}
-		else if (formatName.contains(TYPE_GIF)) {
-			type = TYPE_GIF;
-		}
-		else if (formatName.contains("jpeg") ||
-				 StringUtil.equalsIgnoreCase(type, "jpeg")) {
-
-			type = TYPE_JPEG;
-		}
-		else if (formatName.contains(TYPE_PNG)) {
-			type = TYPE_PNG;
-		}
-		else if (formatName.contains(TYPE_TIFF)) {
-			type = TYPE_TIFF;
-		}
-		else {
-			throw new IllegalArgumentException(type + " is not supported");
-		}
-
-		return new ImageBag(renderedImage, type);
 	}
 
 	@Override
@@ -510,25 +441,7 @@ public class ImageToolImpl implements ImageTool {
 			RenderedImage renderedImage, String contentType, OutputStream os)
 		throws IOException {
 
-		if (contentType.contains(TYPE_BMP)) {
-			ImageIO.write(renderedImage, "bmp", os);
-		}
-		else if (contentType.contains(TYPE_GIF)) {
-			encodeGIF(renderedImage, os);
-		}
-		else if (contentType.contains(TYPE_JPEG) ||
-				 contentType.contains("jpeg")) {
-
-			ImageIO.write(renderedImage, "jpeg", os);
-		}
-		else if (contentType.contains(TYPE_PNG)) {
-			ImageIO.write(renderedImage, TYPE_PNG, os);
-		}
-		else if (contentType.contains(TYPE_TIFF) ||
-				 contentType.contains("tif")) {
-
-			ImageIO.write(renderedImage, "tiff", os);
-		}
+		ImageIO.write(renderedImage, contentType, os);
 	}
 
 	protected RenderedImage doScale(
