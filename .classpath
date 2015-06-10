@@ -296,6 +296,7 @@
 	<classpathentry kind="lib" path="lib/portal/imageio-core-3.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/portal/imageio-metadata-3.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/portal/imageio-jpeg-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/portal/imageio-tiff-3.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/portal/truezip.jar"/>
 	<classpathentry kind="lib" path="lib/portal/unoil.jar"/>
 	<classpathentry kind="lib" path="lib/portal/urlrewritefilter.jar"/>
