@@ -279,6 +279,14 @@
 	<classpathentry kind="lib" path="lib/portal/tomcat-jdbc.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="lib/portal/truezip.jar"/>
+	<classpathentry kind="lib" path="lib/portal/common-lang-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/portal/common-io-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/portal/common-image-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/portal/imageio-core-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/portal/imageio-metadata-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/portal/imageio-jpeg-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/portal/imageio-tiff-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/portal/truezip.jar"/>
 	<classpathentry kind="lib" path="lib/portal/unoil.jar"/>
 	<classpathentry kind="lib" path="lib/portal/urlrewritefilter.jar"/>
 	<classpathentry kind="lib" path="lib/portal/vorbis-java-core.jar"/>

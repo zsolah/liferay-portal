@@ -2090,6 +2090,90 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/common-lang-3.1.0.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/common-io-3.1.0.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/common-image-3.1.0.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-core-3.1.0.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-metadata-3.1.0.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-jpeg-3.1.0.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-tiff-3.1.0.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/jcifs.jar</file-name>
 				<version>1.3.14</version>
 				<project-name>jCIFS</project-name>
