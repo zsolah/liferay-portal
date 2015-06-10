@@ -20,13 +20,10 @@ import com.liferay.portal.model.Image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import java.util.concurrent.Future;
 
 /**
  * @author Brian Wing Shun Chan
