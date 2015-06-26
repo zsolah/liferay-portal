@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -65,6 +68,88 @@ public class AssetEntryQueryResult {
 		}
 	}
 
+	public AssetEntryQueryResult(
+		PortletPreferences portletPreferences, long[] groupIds, Layout layout) {
+
+		_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+			portletPreferences, groupIds, null, null);
+
+		_assetEntryQuery.setGroupIds(groupIds);
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			portletPreferences.getValue("anyAssetType", null), true);
+
+		long[] classNameIds = null;
+
+		if (!anyAssetType) {
+			long[] availableClassNameIds =
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					layout.getCompanyId());
+
+			classNameIds = AssetPublisherUtil.getClassNameIds(
+				portletPreferences, availableClassNameIds);
+
+			_assetEntryQuery.setClassNameIds(classNameIds);
+		}
+
+		long[] classTypeIds = GetterUtil.getLongValues(
+			portletPreferences.getValues("classTypeIds", null));
+
+		_assetEntryQuery.setClassTypeIds(classTypeIds);
+
+		boolean enablePermissions = GetterUtil.getBoolean(
+			portletPreferences.getValue("enablePermissions", null));
+
+		_assetEntryQuery.setEnablePermissions(enablePermissions);
+
+		_assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+
+		boolean excludeZeroViewCount = GetterUtil.getBoolean(
+			portletPreferences.getValue("excludeZeroViewCount", null));
+
+		_assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
+
+		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
+			portletPreferences.getValue("showOnlyLayoutAssets", null));
+
+		if (showOnlyLayoutAssets) {
+			_assetEntryQuery.setLayout(layout);
+		}
+
+		String orderByColumn1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
+
+		_assetEntryQuery.setOrderByCol1(orderByColumn1);
+
+		String orderByColumn2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn2", "title"));
+
+		_assetEntryQuery.setOrderByCol2(orderByColumn2);
+
+		String orderByType1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType1", "DESC"));
+
+		_assetEntryQuery.setOrderByType1(orderByType1);
+
+		String orderByType2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType2", "ASC"));
+
+		_assetEntryQuery.setOrderByType2(orderByType2);
+
+		_assetEntryQuery.setStart(0);
+
+		try {
+			process(
+				null, portletPreferences, classNameIds, false,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+		catch (Exception ex) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error processing");
+			}
+		}
+	}
+
 	public List<AssetEntry> getResults() {
 		return _results;
 	}
@@ -80,7 +165,8 @@ public class AssetEntryQueryResult {
 
 		int groupTotal = 0;
 
-		if (searchWithIndex && (assetEntryQuery.getLinkedAssetEntryId() == 0) &&
+		if (Validator.isNotNull(request) && searchWithIndex &&
+			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
 			!portletName.equals(
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
 			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
@@ -118,7 +204,8 @@ public class AssetEntryQueryResult {
 
 		List<AssetEntry> results = new ArrayList<>();
 
-		if (searchWithIndex && (assetEntryQuery.getLinkedAssetEntryId() == 0) &&
+		if (Validator.isNotNull(request) && searchWithIndex &&
+			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
 			!portletName.equals(
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
 			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
@@ -229,11 +316,15 @@ public class AssetEntryQueryResult {
 			boolean searchWithIndex, int start, int end)
 		throws Exception {
 
-		PortletConfig portletConfig =
-			(PortletConfig)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
+		String portletName = "";
 
-		String portletName = portletConfig.getPortletName();
+		if (Validator.isNotNull(httpServletRequest)) {
+			PortletConfig portletConfig =
+				(PortletConfig)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
+
+			portletName = portletConfig.getPortletName();
+		}
 
 		List<AssetEntry> results = new ArrayList<>();
 		int total = 0;
@@ -258,8 +349,8 @@ public class AssetEntryQueryResult {
 				_assetEntryQuery.setClassNameIds(classNameIds);
 
 				total += getGroupTotal(
-					_assetEntryQuery, httpServletRequest, portletName,
-					start, end, searchWithIndex);
+					_assetEntryQuery, httpServletRequest, portletName, start,
+					end, searchWithIndex);
 
 				results = getResults(
 					_assetEntryQuery, httpServletRequest, portletName, start,
