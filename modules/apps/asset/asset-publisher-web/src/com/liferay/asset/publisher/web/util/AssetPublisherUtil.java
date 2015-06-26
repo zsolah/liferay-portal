@@ -16,25 +16,21 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -79,21 +75,19 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.ClassType;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
-import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -105,13 +99,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -328,209 +318,6 @@ public class AssetPublisherUtil {
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	public static List<AssetEntry> getDynamicAssetEntries(ResourceRequest portletRequest, ResourceResponse portletResponse, PortletPreferences portletPreferences, int delta) throws Exception {
-		AssetPublisherDisplayContext assetPublisherDisplayContext =
-						new AssetPublisherDisplayContext(
-							PortalUtil.getHttpServletRequest(
-								portletRequest), portletPreferences);
-
-		PortletConfig portletConfig =
-						(PortletConfig)portletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_CONFIG);
-
-				String portletName = portletConfig.getPortletName();
-
-		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
-
-		SearchContainer<AssetEntry> searchContainer =
-						new SearchContainer<AssetEntry>(portletRequest, null, null,
-							SearchContainer.DEFAULT_CUR_PARAM,
-							delta,
-							portletResponse.createRenderURL(), null, null);
-
-		int start = searchContainer.getStart();
-
-		int end = searchContainer.getEnd();
-
-		AssetEntryQuery assetEntryQuery = assetPublisherDisplayContext.getAssetEntryQuery();
-		List<AssetEntry> results = new ArrayList<AssetEntry>();
-		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinkedAssetEntryId() > 0)) {
-			int total = 0;
-			long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
-
-			if (assetVocabularyId > 0) {
-				
-				total = AssetPublisherUtil.getTotal(total, portletPreferences,assetEntryQuery, assetPublisherDisplayContext.getClassNameIds(), start, end, httpServletRequest, portletName);
-				
-				results = AssetPublisherUtil.getResults(portletPreferences,assetEntryQuery,assetPublisherDisplayContext.getClassNameIds(),start,end,httpServletRequest,portletName);
-			}
-			else if (assetVocabularyId != -1) {
-				assetEntryQuery.setClassNameIds(assetPublisherDisplayContext.getClassNameIds());
-
-				total = AssetPublisherUtil.getTotal(total, assetEntryQuery, httpServletRequest, portletName, start, end);
-
-				results = AssetPublisherUtil.getResults(assetEntryQuery, httpServletRequest, portletName, start, end);
-			}
-			else {
-				for (long classNameId : assetPublisherDisplayContext.getClassNameIds()) {
-					assetEntryQuery.setClassNameIds(new long[] {classNameId});
-
-					total = AssetPublisherUtil.getTotal(total, portletPreferences,assetEntryQuery, assetPublisherDisplayContext.getClassNameIds(), start, end, httpServletRequest, portletName);
-					
-					int groupTotal = 0;
-					
-					results = AssetPublisherUtil.getResults(assetEntryQuery, httpServletRequest, portletName, start, end);
-
-					httpServletRequest.setAttribute("view.jsp-results", results);
-
-					if (!portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT)) {
-						groupTotal = getGroupTotal(assetEntryQuery, httpServletRequest, portletName, start, end);
-						
-						start = AssetPublisherUtil.getLimit(groupTotal, start);
-
-						end = AssetPublisherUtil.getLimit(groupTotal, end);
-
-						assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-						assetEntryQuery.setStart(QueryUtil.ALL_POS);
-					}
-				}
-			}
-		}
-		return results;
-	}
-
-	public static int getTotal(
-			int total,
-			PortletPreferences portletPreferences,
-			AssetEntryQuery assetEntryQuery,
-			long[] classNameIds,
-			int start, int end,
-			HttpServletRequest request, String portletName) throws Exception {
-
-		long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
-
-		if (assetVocabularyId > 0) {
-			AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
-
-			List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			assetEntryQuery.setClassNameIds(classNameIds);
-
-			for (AssetCategory assetCategory : assetCategories) {
-				
-				assetCategory = assetCategory.toEscapedModel();
-
-				total = getTotal(total, assetEntryQuery, request, portletName, start, end);
-
-			}
-		}
-
-		return total;
-	}
-
-	public static List<AssetEntry> getResults(
-			PortletPreferences portletPreferences,
-			AssetEntryQuery assetEntryQuery,
-			long[] classNameIds,
-			int start, int end,
-			HttpServletRequest request, String portletName) throws Exception {
-
-		List<AssetEntry> results = new ArrayList<AssetEntry>();
-
-		long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
-
-		if (assetVocabularyId > 0) {
-			AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
-
-			List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			assetEntryQuery.setClassNameIds(classNameIds);
-
-			for (AssetCategory assetCategory : assetCategories) {
-
-				assetCategory = assetCategory.toEscapedModel();
-
-				long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
-
-				long[] newAllAssetCategoryIds = ArrayUtil.append(oldAllCategoryIds, assetCategory.getCategoryId());
-
-				assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
-
-				results = getResults(assetEntryQuery, request, portletName, start, end);
-				
-				int groupTotal = getGroupTotal(assetEntryQuery, request, portletName, start, end);
-
-				start = getLimit(groupTotal, start);
-				end = getLimit(groupTotal, end);
-				assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-				assetEntryQuery.setStart(start);
-				assetEntryQuery.setEnd(end);
-
-			}
-		}
-
-		return results;
-	}
-
-	public static int getGroupTotal(AssetEntryQuery assetEntryQuery, HttpServletRequest request, String portletName, int start, int end) throws Exception {
-
-		int groupTotal = 0;
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, start, end);
-
-			groupTotal = baseModelSearchResult.getLength();
-		}
-		else {
-			groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-		}
-
-		return groupTotal;
-	}
-
-	public static int getTotal(int total, AssetEntryQuery assetEntryQuery, HttpServletRequest request, String portletName, int start, int end) throws Exception {
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, start, end);
-
-			total += baseModelSearchResult.getLength();
-		}
-		else {
-			total += AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-		}
-		
-		return total;
-	}
-
-	public static int getLimit(int groupTotal, int limit) {
-		if (groupTotal > 0) {
-			if ((limit > 0) && (limit > groupTotal)) {
-				limit -= groupTotal;
-			}
-			else {
-				limit = 0;
-			}
-		}
-		return limit;
-	}
-
-	public static List<AssetEntry> getResults(AssetEntryQuery assetEntryQuery,
-			HttpServletRequest request, String portletName, int start, int end) throws Exception {
-		List<AssetEntry> results = new ArrayList<AssetEntry>();
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, start, end);
-
-			results = baseModelSearchResult.getBaseModels();
-
-		}
-		else {
-			assetEntryQuery.setStart(start);
-			assetEntryQuery.setEnd(end);
-
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-		}
-
-		return results;
 	}
 
 	public static long[] getAssetCategoryIds(
