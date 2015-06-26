@@ -74,7 +74,9 @@ public class AssetEntryQueryResult {
 		_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
 			portletPreferences, groupIds, null, null);
 
-		_assetEntryQuery.setGroupIds(groupIds);
+		AssetPublisherUtil.addPreferenceValues(
+			_assetEntryQuery, portletPreferences, layout, groupIds, 0,
+			QueryUtil.ALL_POS);
 
 		boolean anyAssetType = GetterUtil.getBoolean(
 			portletPreferences.getValue("anyAssetType", null), true);
@@ -88,55 +90,7 @@ public class AssetEntryQueryResult {
 
 			classNameIds = AssetPublisherUtil.getClassNameIds(
 				portletPreferences, availableClassNameIds);
-
-			_assetEntryQuery.setClassNameIds(classNameIds);
 		}
-
-		long[] classTypeIds = GetterUtil.getLongValues(
-			portletPreferences.getValues("classTypeIds", null));
-
-		_assetEntryQuery.setClassTypeIds(classTypeIds);
-
-		boolean enablePermissions = GetterUtil.getBoolean(
-			portletPreferences.getValue("enablePermissions", null));
-
-		_assetEntryQuery.setEnablePermissions(enablePermissions);
-
-		_assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-
-		boolean excludeZeroViewCount = GetterUtil.getBoolean(
-			portletPreferences.getValue("excludeZeroViewCount", null));
-
-		_assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
-
-		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
-			portletPreferences.getValue("showOnlyLayoutAssets", null));
-
-		if (showOnlyLayoutAssets) {
-			_assetEntryQuery.setLayout(layout);
-		}
-
-		String orderByColumn1 = GetterUtil.getString(
-			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
-
-		_assetEntryQuery.setOrderByCol1(orderByColumn1);
-
-		String orderByColumn2 = GetterUtil.getString(
-			portletPreferences.getValue("orderByColumn2", "title"));
-
-		_assetEntryQuery.setOrderByCol2(orderByColumn2);
-
-		String orderByType1 = GetterUtil.getString(
-			portletPreferences.getValue("orderByType1", "DESC"));
-
-		_assetEntryQuery.setOrderByType1(orderByType1);
-
-		String orderByType2 = GetterUtil.getString(
-			portletPreferences.getValue("orderByType2", "ASC"));
-
-		_assetEntryQuery.setOrderByType2(orderByType2);
-
-		_assetEntryQuery.setStart(0);
 
 		try {
 			process(

@@ -17,9 +17,9 @@
 <%
 AssetEntryQuery assetEntryQuery = assetPublisherDisplayContext.getAssetEntryQuery();
 
-int delta = assetPublisherDisplayContext.getDelta();
+long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
 
-AssetEntryQueryResult assetEntryQueryResult = new AssetEntryQueryResult(assetEntryQuery, request, portletPreferences, assetPublisherDisplayContext.getClassNameIds(), delta, AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX, searchContainer);
+AssetEntryQueryResult assetEntryQueryResult = new AssetEntryQueryResult(assetEntryQuery, request, portletPreferences, classNameIds, AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX, searchContainer);
 
 List<AssetEntry> results = assetEntryQueryResult.getResults();
 int total = assetEntryQueryResult.getTotal();
