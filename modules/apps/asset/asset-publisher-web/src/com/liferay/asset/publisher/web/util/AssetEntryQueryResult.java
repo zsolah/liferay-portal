@@ -60,7 +60,7 @@ public class AssetEntryQueryResult {
 		}
 		catch (Exception ex) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Error processing AssetEntryQuery");
+				_log.warn("Error processing");
 			}
 		}
 	}
@@ -191,30 +191,6 @@ public class AssetEntryQueryResult {
 	}
 
 	private static int getTotal(
-			int total, AssetEntryQuery assetEntryQuery,
-			HttpServletRequest request, String portletName, int start, int end,
-			boolean searchWithIndex)
-		throws Exception {
-
-		if (searchWithIndex && (assetEntryQuery.getLinkedAssetEntryId() == 0) &&
-			!portletName.equals(
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
-			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-				AssetUtil.searchAssetEntries(
-					request, assetEntryQuery, start, end);
-
-			total += baseModelSearchResult.getLength();
-		}
-		else {
-			total += AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-		}
-
-		return total;
-	}
-
-	private static int getTotal(
 		int total, PortletPreferences portletPreferences,
 		AssetEntryQuery assetEntryQuery, long[] classNameIds, int start,
 		int end, HttpServletRequest request,
@@ -238,8 +214,8 @@ public class AssetEntryQueryResult {
 			for (AssetCategory assetCategory : assetCategories) {
 				assetCategory = assetCategory.toEscapedModel();
 
-				total = getTotal(
-					total, assetEntryQuery, request, portletName, start, end,
+				total += getGroupTotal(
+					assetEntryQuery, request, portletName, start, end,
 					searchWithIndex);
 			}
 		}
@@ -254,10 +230,10 @@ public class AssetEntryQueryResult {
 		throws Exception {
 
 		PortletConfig portletConfig =
-						(PortletConfig)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_CONFIG);
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
-				String portletName = portletConfig.getPortletName();
+		String portletName = portletConfig.getPortletName();
 
 		List<AssetEntry> results = new ArrayList<>();
 		int total = 0;
@@ -281,8 +257,8 @@ public class AssetEntryQueryResult {
 			else if (assetVocabularyId != -1) {
 				_assetEntryQuery.setClassNameIds(classNameIds);
 
-				total = getTotal(
-					total, _assetEntryQuery, httpServletRequest, portletName,
+				total += getGroupTotal(
+					_assetEntryQuery, httpServletRequest, portletName,
 					start, end, searchWithIndex);
 
 				results = getResults(
