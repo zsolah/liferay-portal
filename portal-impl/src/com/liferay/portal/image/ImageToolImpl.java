@@ -46,8 +46,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 
 import net.jmge.gif.Gif89Encoder;
 
@@ -372,13 +374,20 @@ public class ImageToolImpl implements ImageTool {
 
 	@Override
 	public ImageBag read(byte[] bytes) throws IOException {
-		try {
-			BufferedImage renderedImage = ImageIO.read(new ByteArrayInputStream(bytes));
-			String type = TYPE_NOT_AVAILABLE;
+			BufferedImage renderedImage = ImageIO.read(
+				new ByteArrayInputStream(bytes));
+			
+			Iterator<ImageReader> readers = ImageIO.getImageReaders(renderedImage);
+			
+			if (!readers.hasNext()) {
+                throw new IOException("No reader for image");
+            }
+			
+			ImageReader reader = readers.next();
+			
+			
+			String type = reader.getFormatName();
 			return new ImageBag(renderedImage, type);
-		} catch(IOException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@Override
