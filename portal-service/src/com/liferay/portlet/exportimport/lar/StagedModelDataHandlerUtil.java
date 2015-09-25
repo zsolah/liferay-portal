@@ -242,7 +242,7 @@ public class StagedModelDataHandlerUtil {
 		List<Element> referenceElements = referencesElement.elements();
 
 		for (Element referenceElement : referenceElements) {
-			String className = referenceElement.attributeValue("class-name");
+			String className = referenceElement.attributeValue("referenced-class-name");
 			String stagedModelClassName = stagedModelClass.getName();
 
 			if (!stagedModelClassName.equals(className)) {

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.web.lar;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -282,6 +284,22 @@ public class DDMStructureStagedModelDataHandler
 				structure.getUuid(), portletDataContext.getScopeGroupId(),
 				structure.getClassNameId(), structure.getStructureKey(),
 				preloaded);
+
+			if (existingStructure == null) {
+				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+					portletDataContext.getCompanyId());
+
+				if(!preloaded) {
+					existingStructure = DDMStructureUtil.fetchByUUID_G(
+						structure.getUuid(), companyGroup.getGroupId());
+				}
+				else {
+					existingStructure = DDMStructureUtil.fetchByG_C_S(
+						companyGroup.getGroupId(),
+						structure.getClassNameId(),
+						structure.getStructureKey());
+				}
+			}
 
 			if (existingStructure == null) {
 				serviceContext.setUuid(structure.getUuid());
