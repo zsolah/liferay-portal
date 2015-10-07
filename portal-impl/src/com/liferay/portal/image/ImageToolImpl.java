@@ -39,11 +39,13 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -376,16 +378,16 @@ public class ImageToolImpl implements ImageTool {
 	public ImageBag read(byte[] bytes) throws IOException {
 			BufferedImage renderedImage = ImageIO.read(
 				new ByteArrayInputStream(bytes));
-			
-			Iterator<ImageReader> readers = ImageIO.getImageReaders(renderedImage);
-			
+
+			Iterator<ImageReader> readers = ImageIO.getImageReaders(
+				renderedImage);
+
 			if (!readers.hasNext()) {
-                throw new IOException("No reader for image");
-            }
-			
+				throw new IOException("No reader for image");
+			}
+
 			ImageReader reader = readers.next();
-			
-			
+
 			String type = reader.getFormatName();
 			return new ImageBag(renderedImage, type);
 	}
