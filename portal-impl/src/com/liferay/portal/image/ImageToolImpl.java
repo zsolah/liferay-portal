@@ -477,18 +477,20 @@ public class ImageToolImpl implements ImageTool {
 		RenderedImage renderedImage = null;
 
 		try {
+			boolean firstImageReader = true;
+
 			imageInputStream = ImageIO.createImageInputStream(
 				new ByteArrayInputStream(bytes));
 
 			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
 				imageInputStream);
 
-			while ((renderedImage == null) && iterator.hasNext()) {
+			while (iterator.hasNext()) {
 				ImageReader imageReader = iterator.next();
 
 				imageReaders.offer(imageReader);
 
-				try {
+				if (firstImageReader) {
 					imageReader.setInput(imageInputStream);
 
 					int height = imageReader.getHeight(0);
@@ -501,17 +503,11 @@ public class ImageToolImpl implements ImageTool {
 					}
 
 					renderedImage = imageReader.read(0);
-				}
-				catch (IOException ioe) {
-					continue;
-				}
 
-				formatName = StringUtil.toLowerCase(
-					imageReader.getFormatName());
-			}
+					formatName = imageReader.getFormatName();
 
-			if (renderedImage == null) {
-				throw new IOException("Unsupported Image Type");
+					firstImageReader = false;
+				}
 			}
 		}
 		finally {
@@ -525,6 +521,8 @@ public class ImageToolImpl implements ImageTool {
 				imageInputStream.close();
 			}
 		}
+
+		formatName = StringUtil.toLowerCase(formatName);
 
 		String type = TYPE_JPEG;
 
