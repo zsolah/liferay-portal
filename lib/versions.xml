@@ -1400,6 +1400,42 @@
 				</comments>
 			</library>
 			<library>
+				<file-name>lib/portal/common-image-3.1.2.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/common-io-3.1.2.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/common-lang-3.1.2.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/commons-beanutils.jar</file-name>
 				<version>1.8.2</version>
 				<project-name>Commons Beanutils</project-name>
@@ -1926,6 +1962,126 @@
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 						<copyright-notice>Copyright (c) Bernhard Bablok 2008-2010</copyright-notice>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-bmp-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-core-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-icns-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-jpeg-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-metadata-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-pcx-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-pict-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-psd-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-tga-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-tiff-3.1.2.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
