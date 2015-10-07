@@ -37,7 +37,6 @@ import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
-import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
@@ -47,7 +46,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.Future;
 
 /**
  * @author Sergio González
@@ -291,28 +289,6 @@ public class ImageProcessorImpl
 
 			if (renderedImage == null) {
 				return;
-			}
-
-			ColorModel colorModel = renderedImage.getColorModel();
-
-			if (colorModel.getNumColorComponents() == 4) {
-				Future<RenderedImage> future = ImageToolUtil.convertCMYKtoRGB(
-					bytes, imageBag.getType());
-
-				if (future == null) {
-					return;
-				}
-
-				String processIdentity = String.valueOf(
-					destinationFileVersion.getFileVersionId());
-
-				futures.put(processIdentity, future);
-
-				RenderedImage convertedRenderedImage = future.get();
-
-				if (convertedRenderedImage != null) {
-					renderedImage = convertedRenderedImage;
-				}
 			}
 
 			if (!_hasPreview(destinationFileVersion)) {

@@ -27,8 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import java.util.concurrent.Future;
-
 /**
  * The Image utility class.
  *
@@ -37,26 +35,6 @@ import java.util.concurrent.Future;
  */
 @ProviderType
 public class ImageToolUtil {
-
-	/**
-	 * Returns the CMYK image converted to RGB using ImageMagick. This must be
-	 * run against the original <code>byte[]</code> and not one extracted from a
-	 * {@link java.awt.image.RenderedImage}. The latter may potentially have
-	 * been already been read incorrectly.
-	 *
-	 * @param  bytes the image to convert
-	 * @param  type the image type (e.g., "gif", "jpg", etc.)
-	 * @return the asynchronous process converting the image or <code>null
-	 *         </code> if ImageMagick was disabled or if the conversion could
-	 *         not be completed. The conversion may not complete if (1) the
-	 *         image was not in the CMYK colorspace to begin with or (2) there
-	 *         was an error in the conversion process.
-	 */
-	public static Future<RenderedImage> convertCMYKtoRGB(
-		byte[] bytes, String type) {
-
-		return getImageTool().convertCMYKtoRGB(bytes, type);
-	}
 
 	/**
 	 * Returns the image converted to the type.
