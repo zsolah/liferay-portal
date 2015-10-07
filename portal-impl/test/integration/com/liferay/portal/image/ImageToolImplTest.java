@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
@@ -160,7 +158,10 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(expectedImage);
 
-		DataBuffer expectedDataBuffer = expectedImage.getData().getDataBuffer();
+		DataBufferByte expectedDataBufferByte =
+			(DataBufferByte)expectedImage.getData().getDataBuffer();
+
+		byte[][] expectedData = expectedDataBufferByte.getBankData();
 
 		String expectedType = FileUtil.getExtension(fileName);
 
@@ -180,28 +181,17 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(resultImage);
 
-		DataBuffer resultDataBuffer = resultImage.getData().getDataBuffer();
+		DataBufferByte resultDataBufferByte =
+			(DataBufferByte)resultImage.getData().getDataBuffer();
+
+		byte[][] resultData = resultDataBufferByte.getBankData();
 
 		String resultType = imageBag.getType();
 
 		Assert.assertTrue(
 			StringUtil.equalsIgnoreCase(expectedType, resultType));
-		Assert.assertTrue(
-			expectedDataBuffer instanceof DataBufferByte ||
-			expectedDataBuffer instanceof DataBufferInt);
 
-		if (expectedDataBuffer instanceof DataBufferByte) {
-			Assert.assertTrue(
-				Arrays.deepEquals(
-					((DataBufferByte)expectedDataBuffer).getBankData(),
-					((DataBufferByte)resultDataBuffer).getBankData()));
-		}
-		else if (expectedDataBuffer instanceof DataBufferInt) {
-			Assert.assertTrue(
-				Arrays.deepEquals(
-					((DataBufferInt)expectedDataBuffer).getBankData(),
-					((DataBufferInt)resultDataBuffer).getBankData()));
-		}
+		Assert.assertTrue(Arrays.deepEquals(expectedData, resultData));
 	}
 
 	protected void testCrop(
