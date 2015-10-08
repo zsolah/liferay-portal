@@ -14,9 +14,7 @@
 
 package com.liferay.portal.image;
 
-import com.liferay.portal.kernel.concurrent.FutureConverter;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
@@ -50,10 +47,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
 
 import net.jmge.gif.Gif89Encoder;
 
@@ -379,21 +374,12 @@ public class ImageToolImpl implements ImageTool {
 	@Override
 	public ImageBag read(byte[] bytes) throws IOException {
 
-		BufferedImage renderedImage = ImageIO.read(
- 				new ByteArrayInputStream(bytes));
+		BufferedImage renderedImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
-		Iterator<ImageReader> readers = ImageIO.getImageReaders(
-				renderedImage);
-
-		if (!readers.hasNext()) {
-			throw new IOException("Unsupported image type");
-		}
-
-		ImageReader reader = readers.next();
-
-		String type = reader.getFormatName();
+		String type = TYPE_NOT_AVAILABLE;
 
 		return new ImageBag(renderedImage, type);
+
 	}
 
 	@Override
