@@ -14,7 +14,6 @@
 
 package com.liferay.portal.image;
 
-import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -311,15 +310,13 @@ public class ImageToolImpl implements ImageTool {
 			return null;
 		}
 
-		ImageBag imageBag = read(bytes);
-
-		RenderedImage renderedImage = imageBag.getRenderedImage();
+		RenderedImage renderedImage = read(bytes);
 
 		if (renderedImage == null) {
 			throw new IOException("Unable to decode image");
 		}
-
-		String type = imageBag.getType();
+//TODO
+//		String type = imageBag.getType();
 
 		int height = renderedImage.getHeight();
 		int width = renderedImage.getWidth();
@@ -328,7 +325,8 @@ public class ImageToolImpl implements ImageTool {
 		Image image = new ImageImpl();
 
 		image.setTextObj(bytes);
-		image.setType(type);
+		//TODO
+//		image.setType(type);
 		image.setHeight(height);
 		image.setWidth(width);
 		image.setSize(size);
@@ -372,23 +370,21 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
-	public ImageBag read(byte[] bytes) throws IOException {
+	public RenderedImage read(byte[] bytes) throws IOException {
 
 		BufferedImage renderedImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
-		String type = TYPE_NOT_AVAILABLE;
-
-		return new ImageBag(renderedImage, type);
+		return renderedImage;
 
 	}
 
 	@Override
-	public ImageBag read(File file) throws IOException {
+	public RenderedImage read(File file) throws IOException {
 		return read(_fileUtil.getBytes(file));
 	}
 
 	@Override
-	public ImageBag read(InputStream inputStream) throws IOException {
+	public RenderedImage read(InputStream inputStream) throws IOException {
 		return read(_fileUtil.getBytes(inputStream));
 	}
 

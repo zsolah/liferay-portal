@@ -164,7 +164,7 @@ public class ImageToolUtil {
 	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
 	 * @throws IOException if an IO exception occurred
 	 */
-	public static ImageBag read(byte[] bytes) throws IOException {
+	public static RenderedImage read(byte[] bytes) throws IOException {
 		return getImageTool().read(bytes);
 	}
 
@@ -177,11 +177,11 @@ public class ImageToolUtil {
 	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
 	 * @throws IOException if an IO exception occurred
 	 */
-	public static ImageBag read(File file) throws IOException {
+	public static RenderedImage read(File file) throws IOException {
 		return getImageTool().read(file);
 	}
 
-	public static ImageBag read(InputStream inputStream) throws IOException {
+	public static RenderedImage read(InputStream inputStream) throws IOException {
 		return getImageTool().read(inputStream);
 	}
 

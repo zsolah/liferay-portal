@@ -84,11 +84,11 @@ public interface ImageTool {
 
 	public boolean isNullOrDefaultSpacer(byte[] bytes);
 
-	public ImageBag read(byte[] bytes) throws IOException;
+	public RenderedImage read(byte[] bytes) throws IOException;
 
-	public ImageBag read(File file) throws IOException;
+	public RenderedImage read(File file) throws IOException;
 
-	public ImageBag read(InputStream inputStream) throws IOException;
+	public RenderedImage read(InputStream inputStream) throws IOException;
 
 	public RenderedImage scale(RenderedImage renderedImage, int width);
 

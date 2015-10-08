@@ -283,9 +283,7 @@ public class ImageProcessorImpl
 
 			byte[] bytes = FileUtil.getBytes(inputStream);
 
-			ImageBag imageBag = ImageToolUtil.read(bytes);
-
-			RenderedImage renderedImage = imageBag.getRenderedImage();
+			RenderedImage renderedImage = ImageToolUtil.read(bytes);
 
 			if (renderedImage == null) {
 				return;
@@ -364,6 +362,9 @@ public class ImageProcessorImpl
 		String mimeType = fileVersion.getMimeType();
 
 		if (mimeType.contains("tiff") || mimeType.contains("tif")) {
+			return true;
+		}
+		else if (mimeType.contains("ico")) {
 			return true;
 		}
 		else {
