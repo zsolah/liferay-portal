@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -453,20 +452,6 @@ public class StagedModelDataHandlerUtil {
 				element, path);
 
 			classNameAttribute = element.attribute("class-name");
-		}
-
-		if ((classNameAttribute != null) &&
-			(stagedModel instanceof TypedModel)) {
-
-			String className = classNameAttribute.getValue();
-
-			if (Validator.isNotNull(className)) {
-				long classNameId = PortalUtil.getClassNameId(className);
-
-				TypedModel typedModel = (TypedModel)stagedModel;
-
-				typedModel.setClassNameId(classNameId);
-			}
 		}
 
 		return stagedModel;

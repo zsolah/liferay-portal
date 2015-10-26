@@ -64,6 +64,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
+import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -72,6 +73,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -719,7 +721,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return null;
 		}
 
-		return _xStream.fromXML(new String(bytes));
+		Object xmlObject = _xStream.fromXML(new String(bytes));
+
+		if (xmlObject != null && xmlObject instanceof TypedModel) {
+			TypedModel typedModel = (TypedModel)xmlObject;
+
+			String className = typedModel.getClassName();
+
+			long classNameId = PortalUtil.getClassNameId(className);
+
+			typedModel.setClassNameId(classNameId);
+		}
+
+		return xmlObject;
 	}
 
 	@Override
@@ -728,7 +742,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return null;
 		}
 
-		return _xStream.fromXML(xml);
+		Object xmlObject = _xStream.fromXML(xml);
+
+		if (xmlObject != null && xmlObject instanceof TypedModel) {
+			TypedModel typedModel = (TypedModel)xmlObject;
+
+			String className = typedModel.getClassName();
+
+			long classNameId = PortalUtil.getClassNameId(className);
+
+			typedModel.setClassNameId(classNameId);
+		}
+
+		return xmlObject;
 	}
 
 	@Override
