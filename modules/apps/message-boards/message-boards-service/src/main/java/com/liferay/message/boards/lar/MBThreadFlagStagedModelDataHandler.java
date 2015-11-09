@@ -144,7 +144,7 @@ public class MBThreadFlagStagedModelDataHandler
 			portletDataContext, MBMessage.class.getName(), rootMessageId);
 
 		MBMessage rootMessage =
-			(MBMessage)portletDataContext.getZipEntryAsObject(rootMessagePath);
+			(MBMessage)portletDataContext.getZipEntryAsObject(element, rootMessagePath);
 
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, rootMessage);

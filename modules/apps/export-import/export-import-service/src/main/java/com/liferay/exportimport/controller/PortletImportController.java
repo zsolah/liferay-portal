@@ -1105,7 +1105,7 @@ public class PortletImportController implements ImportController {
 				}
 
 				AssetLink assetLink =
-					(AssetLink)portletDataContext.getZipEntryAsObject(path);
+					(AssetLink)portletDataContext.getZipEntryAsObject(assetLinkElement, path);
 
 				long userId = portletDataContext.getUserId(
 					assetLink.getUserUuid());
@@ -1214,7 +1214,7 @@ public class PortletImportController implements ImportController {
 			String className = assetElement.attributeValue("class-name");
 			String key = assetElement.attributeValue("key");
 
-			Lock lock = (Lock)portletDataContext.getZipEntryAsObject(path);
+			Lock lock = (Lock)portletDataContext.getZipEntryAsObject(assetElement, path);
 
 			if (lock != null) {
 				portletDataContext.addLocks(className, key, lock);

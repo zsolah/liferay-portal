@@ -319,7 +319,7 @@ public class OrganizationStagedModelDataHandler
 		for (Element addressElement : addressElements) {
 			String addressPath = addressElement.attributeValue("path");
 
-			Address address = (Address)portletDataContext.getZipEntryAsObject(
+			Address address = (Address)portletDataContext.getZipEntryAsObject(addressElement,
 				addressPath);
 
 			address.setClassPK(importedOrganization.getOrganizationId());
@@ -360,7 +360,7 @@ public class OrganizationStagedModelDataHandler
 				"path");
 
 			EmailAddress emailAddress =
-				(EmailAddress)portletDataContext.getZipEntryAsObject(
+				(EmailAddress)portletDataContext.getZipEntryAsObject(emailAddressElement,
 					emailAddressPath);
 
 			emailAddress.setClassPK(importedOrganization.getOrganizationId());
@@ -394,7 +394,7 @@ public class OrganizationStagedModelDataHandler
 			organization, OrgLabor.class.getSimpleName());
 
 		List<OrgLabor> orgLabors =
-			(List<OrgLabor>)portletDataContext.getZipEntryAsObject(path);
+			(List<OrgLabor>)portletDataContext.getZipEntryAsObject(OrgLabor.class.getSimpleName(),path);
 
 		for (OrgLabor orgLabor : orgLabors) {
 			orgLabor.setOrgLaborId(0);
@@ -423,8 +423,7 @@ public class OrganizationStagedModelDataHandler
 			"path");
 
 		PasswordPolicy passwordPolicy =
-			(PasswordPolicy)portletDataContext.getZipEntryAsObject(
-				passwordPolicyPath);
+			(PasswordPolicy)portletDataContext.getZipEntryAsObject(passwordPolicyElement,passwordPolicyPath);
 
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, passwordPolicy);
@@ -499,7 +498,7 @@ public class OrganizationStagedModelDataHandler
 			String websitePath = websiteElement.attributeValue("path");
 
 			Website website = (Website)portletDataContext.getZipEntryAsObject(
-				websitePath);
+				websiteElement, websitePath);
 
 			website.setClassPK(importedOrganization.getOrganizationId());
 

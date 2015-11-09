@@ -534,6 +534,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Object getZipEntryAsObject(Element element, String path);
 
+	public Object getZipEntryAsObject(String className, String path);
+
 	public Object getZipEntryAsObject(String path);
 
 	public String getZipEntryAsString(String path);

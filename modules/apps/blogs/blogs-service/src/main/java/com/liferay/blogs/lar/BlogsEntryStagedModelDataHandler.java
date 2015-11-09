@@ -277,7 +277,7 @@ public class BlogsEntryStagedModelDataHandler
 					String path = attachmentElement.attributeValue("path");
 
 					FileEntry fileEntry =
-						(FileEntry)portletDataContext.getZipEntryAsObject(path);
+						(FileEntry)portletDataContext.getZipEntryAsObject(attachmentElement, path);
 
 					FileEntry smallImageFileEntry =
 						TempFileEntryUtil.addTempFileEntry(
@@ -378,7 +378,7 @@ public class BlogsEntryStagedModelDataHandler
 
 		String path = attachmentElement.attributeValue("path");
 
-		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(
+		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(attachmentElement,
 			path);
 
 		String binPath = attachmentElement.attributeValue("bin-path");

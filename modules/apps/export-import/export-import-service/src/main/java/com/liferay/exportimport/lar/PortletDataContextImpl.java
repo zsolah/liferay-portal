@@ -64,6 +64,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
+import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -72,6 +73,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -1398,16 +1400,48 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public Object getZipEntryAsObject(Element element, String path) {
-		Object object = fromXML(getZipEntryAsString(path));
+		Object xmlObject = fromXML(getZipEntryAsString(path));
 
 		Attribute classNameAttribute = element.attribute("class-name");
 
 		if (classNameAttribute != null) {
-			BeanPropertiesUtil.setProperty(
-				object, "className", classNameAttribute.getText());
+			if (BeanUtil.hasProperty(xmlObject, "className")) {
+				BeanPropertiesUtil.setProperty(
+					xmlObject, "className", classNameAttribute.getText());
+			}
+
+			if (xmlObject != null && xmlObject instanceof TypedModel) {
+				TypedModel typedModel = (TypedModel)xmlObject;
+
+				long classNameId = PortalUtil.getClassNameId(classNameAttribute.getText());
+
+				typedModel.setClassNameId(classNameId);
+			}
 		}
 
-		return object;
+		return xmlObject;
+	}
+
+	@Override
+	public Object getZipEntryAsObject(String className, String path) {
+		Object xmlObject = fromXML(getZipEntryAsString(path));
+
+		if (className != null) {
+			if (BeanUtil.hasProperty(xmlObject, "className")) {
+				BeanPropertiesUtil.setProperty(
+					xmlObject, "className", className);
+			}
+
+			if (xmlObject != null && xmlObject instanceof TypedModel) {
+				TypedModel typedModel = (TypedModel)xmlObject;
+
+				long classNameId = PortalUtil.getClassNameId(className);
+
+				typedModel.setClassNameId(classNameId);
+			}
+		}
+
+		return xmlObject;
 	}
 
 	@Override
@@ -2107,7 +2141,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		if (Validator.isNotNull(expandoPath)) {
 			try {
 				Map<String, Serializable> expandoBridgeAttributes =
-					(Map<String, Serializable>)getZipEntryAsObject(expandoPath);
+					(Map<String, Serializable>)getZipEntryAsObject(element, expandoPath);
 
 				if (expandoBridgeAttributes != null) {
 					serviceContext.setExpandoBridgeAttributes(

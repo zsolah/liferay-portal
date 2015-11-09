@@ -215,7 +215,7 @@ public class RoleStagedModelDataHandler
 			role, "permissions.xml");
 
 		List<Permission> permissions =
-			(List<Permission>)portletDataContext.getZipEntryAsObject(
+			(List<Permission>)portletDataContext.getZipEntryAsObject(Role.class.getName(),
 				permissionsPath);
 
 		for (Permission permission : permissions) {

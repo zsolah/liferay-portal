@@ -439,7 +439,7 @@ public class MBMessageStagedModelDataHandler
 			String path = attachmentElement.attributeValue("path");
 
 			FileEntry fileEntry =
-				(FileEntry)portletDataContext.getZipEntryAsObject(path);
+				(FileEntry)portletDataContext.getZipEntryAsObject(attachmentElement, path);
 
 			InputStream inputStream = null;
 

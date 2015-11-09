@@ -685,7 +685,7 @@ public class FileEntryStagedModelDataHandler
 			String path = structureFieldsElement.attributeValue("path");
 
 			DDMFormValues ddmFormValues =
-				(DDMFormValues)portletDataContext.getZipEntryAsObject(path);
+				(DDMFormValues)portletDataContext.getZipEntryAsObject(structureFieldsElement, path);
 
 			serviceContext.setAttribute(
 				DDMFormValues.class.getName() + ddmStructure.getStructureId(),

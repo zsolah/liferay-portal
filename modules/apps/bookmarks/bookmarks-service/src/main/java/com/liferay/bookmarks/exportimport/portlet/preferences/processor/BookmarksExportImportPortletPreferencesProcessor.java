@@ -106,7 +106,7 @@ public class BookmarksExportImportPortletPreferencesProcessor
 			portletDataContext, BookmarksFolder.class.getName(), rootFolderId);
 
 		BookmarksFolder folder =
-			(BookmarksFolder)portletDataContext.getZipEntryAsObject(
+			(BookmarksFolder)portletDataContext.getZipEntryAsObject(BookmarksFolder.class.getName(),
 				rootFolderPath);
 
 		StagedModelDataHandlerUtil.importStagedModel(

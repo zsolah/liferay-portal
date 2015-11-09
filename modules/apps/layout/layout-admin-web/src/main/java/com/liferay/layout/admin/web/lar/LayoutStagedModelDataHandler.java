@@ -954,7 +954,7 @@ public class LayoutStagedModelDataHandler
 				layoutFriendlyURLElement.attributeValue("path");
 
 			LayoutFriendlyURL layoutFriendlyURL =
-				(LayoutFriendlyURL)portletDataContext.getZipEntryAsObject(
+				(LayoutFriendlyURL)portletDataContext.getZipEntryAsObject(layoutFriendlyURLElement,
 					layoutFriendlyURLPath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -1021,7 +1021,7 @@ public class LayoutStagedModelDataHandler
 				"path");
 
 			Layout linkedToLayout =
-				(Layout)portletDataContext.getZipEntryAsObject(
+				(Layout)portletDataContext.getZipEntryAsObject(linkedToLayoutElement,
 					linkedToLayoutPath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
