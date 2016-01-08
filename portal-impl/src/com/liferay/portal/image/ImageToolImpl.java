@@ -396,20 +396,16 @@ public class ImageToolImpl implements ImageTool {
 			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
 				imageInputStream);
 
-			while (iterator.hasNext()) {
+			while ((renderedImage == null) && iterator.hasNext()) {
 				ImageReader imageReader = iterator.next();
 
 				imageReaders.offer(imageReader);
 
-				if (firstImageReader) {
-					imageReader.setInput(imageInputStream);
+				imageReader.setInput(imageInputStream);
 
-					renderedImage = imageReader.read(0);
+				renderedImage = imageReader.read(0);
 
-					formatName = imageReader.getFormatName();
-
-					firstImageReader = false;
-				}
+				formatName = imageReader.getFormatName();
 			}
 		}
 		finally {
