@@ -26,8 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import java.util.concurrent.Future;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
@@ -53,9 +51,6 @@ public interface ImageTool {
 		RenderedImage renderedImage, int height, int width, int x, int y);
 
 	public void encodeGIF(RenderedImage renderedImage, OutputStream os)
-		throws IOException;
-
-	public void encodeWBMP(RenderedImage renderedImage, OutputStream os)
 		throws IOException;
 
 	public BufferedImage getBufferedImage(RenderedImage renderedImage);
