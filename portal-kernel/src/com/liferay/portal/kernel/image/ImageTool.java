@@ -51,9 +51,6 @@ public interface ImageTool {
 	public RenderedImage crop(
 		RenderedImage renderedImage, int height, int width, int x, int y);
 
-	public void encodeGIF(RenderedImage renderedImage, OutputStream os)
-		throws IOException;
-
 	public BufferedImage getBufferedImage(RenderedImage renderedImage);
 
 	public byte[] getBytes(RenderedImage renderedImage, String contentType)

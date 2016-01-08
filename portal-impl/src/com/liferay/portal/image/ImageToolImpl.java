@@ -38,10 +38,8 @@ import java.awt.GraphicsConfiguration;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
-import java.awt.image.DataBuffer;
 import java.awt.image.IndexColorModel;
 import java.awt.image.RenderedImage;
-import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
 
 import java.io.ByteArrayInputStream;
@@ -59,8 +57,6 @@ import java.util.Queue;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
-
-import net.jmge.gif.Gif89Encoder;
 
 /**
  * @author Brian Wing Shun Chan
@@ -185,22 +181,6 @@ public class ImageToolImpl implements ImageTool {
 		return bufferedImage.getSubimage(
 			croppedRectangle.x, croppedRectangle.y, croppedRectangle.width,
 			croppedRectangle.height);
-	}
-
-	@Override
-	public void encodeGIF(RenderedImage renderedImage, OutputStream os)
-		throws IOException {
-
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
-
-		if (!(bufferedImage.getColorModel() instanceof IndexColorModel)) {
-			bufferedImage = convertImageType(
-				bufferedImage, BufferedImage.TYPE_BYTE_INDEXED);
-		}
-
-		Gif89Encoder encoder = new Gif89Encoder(bufferedImage);
-
-		encoder.encode(os);
 	}
 
 	@Override
@@ -487,7 +467,7 @@ public class ImageToolImpl implements ImageTool {
 			ImageIO.write(renderedImage, "bmp", os);
 		}
 		else if (contentType.contains(TYPE_GIF)) {
-			encodeGIF(renderedImage, os);
+			ImageIO.write(renderedImage, "gif", os);
 		}
 		else if (contentType.contains(TYPE_JPEG) ||
 				 contentType.contains("jpeg")) {
