@@ -409,41 +409,38 @@ public class ImageToolImpl implements ImageTool {
 			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
 				imageInputStream);
 
-			while (iterator.hasNext()) {
+			while ((renderedImage == null) && iterator.hasNext()) {
 				ImageReader imageReader = iterator.next();
 
 				imageReaders.offer(imageReader);
 
-				if (firstImageReader) {
-					imageReader.setInput(imageInputStream);
+				imageReader.setInput(imageInputStream);
 
-					int height = imageReader.getHeight(0);
-					int width = imageReader.getWidth(0);
 
-					if ((height > PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT) ||
-						(width > PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)) {
+				int height = imageReader.getHeight(0);
+				int width = imageReader.getWidth(0);
 
-						StringBundler sb = new StringBundler(9);
+				if ((height > PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT) ||
+					(width > PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)) {
 
-						sb.append("Image's dimensions (");
-						sb.append(height);
-						sb.append(" px high and ");
-						sb.append(width);
-						sb.append(" px wide) exceed max dimensions (");
-						sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT);
-						sb.append(" px high and ");
-						sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH);
-						sb.append(" px wide)");
+					StringBundler sb = new StringBundler(9);
 
-						throw new ImageResolutionException(sb.toString());
-					}
+					sb.append("Image's dimensions (");
+					sb.append(height);
+					sb.append(" px high and ");
+					sb.append(width);
+					sb.append(" px wide) exceed max dimensions (");
+					sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT);
+					sb.append(" px high and ");
+					sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH);
+					sb.append(" px wide)");
 
-					renderedImage = imageReader.read(0);
-
-					formatName = imageReader.getFormatName();
-
-					firstImageReader = false;
+					throw new ImageResolutionException(sb.toString());
 				}
+
+				renderedImage = imageReader.read(0);
+
+				formatName = imageReader.getFormatName();
 			}
 		}
 		finally {
