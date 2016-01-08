@@ -20,7 +20,6 @@ import com.liferay.portal.model.Image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,16 +44,6 @@ public interface ImageTool {
 
 	public static final String TYPE_TIFF = "tiff";
 
-	public BufferedImage convertImageType(BufferedImage sourceImage, int type);
-
-	public RenderedImage crop(
-		RenderedImage renderedImage, int height, int width, int x, int y);
-
-	public BufferedImage getBufferedImage(RenderedImage renderedImage);
-
-	public byte[] getBytes(RenderedImage renderedImage, String contentType)
-		throws IOException;
-
 	public Image getDefaultCompanyLogo();
 
 	public Image getDefaultOrganizationLogo();
@@ -67,28 +56,8 @@ public interface ImageTool {
 
 	public Image getImage(byte[] bytes) throws IOException;
 
-	public Image getImage(File file) throws IOException;
-
 	public Image getImage(InputStream is) throws IOException;
 
-	public Image getImage(InputStream is, boolean cleanUpStream)
-		throws IOException;
-
 	public boolean isNullOrDefaultSpacer(byte[] bytes);
-
-	public ImageBag read(byte[] bytes) throws IOException;
-
-	public ImageBag read(File file) throws IOException;
-
-	public ImageBag read(InputStream inputStream) throws IOException;
-
-	public RenderedImage scale(RenderedImage renderedImage, int width);
-
-	public RenderedImage scale(
-		RenderedImage renderedImage, int maxHeight, int maxWidth);
-
-	public abstract void write(
-			RenderedImage renderedImage, String contentType, OutputStream os)
-		throws IOException;
 
 }
