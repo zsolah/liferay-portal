@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -44,27 +44,27 @@ public class ImageSelectorProcessor {
 		int y = jsonObject.getInt("y");
 
 		if ((x > 0) || (y > 0) || (width > 0) || (height > 0)) {
-			ImageBag imageBag = ImageToolUtil.read(_bytes);
+			ImageBag imageBag = ImageIOToolUtil.read(_bytes);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 
-			renderedImage = ImageToolUtil.crop(
+			renderedImage = ImageIOToolUtil.crop(
 				renderedImage, height, width, x, y);
 
-			return ImageToolUtil.getBytes(renderedImage, imageBag.getType());
+			return ImageIOToolUtil.getBytes(renderedImage, imageBag.getType());
 		}
 
 		return _bytes;
 	}
 
 	public byte[] scaleImage(int width) throws IOException {
-		ImageBag imageBag = ImageToolUtil.read(_bytes);
+		ImageBag imageBag = ImageIOToolUtil.read(_bytes);
 
 		RenderedImage renderedImage = imageBag.getRenderedImage();
 
-		renderedImage = ImageToolUtil.scale(renderedImage, width);
+		renderedImage = ImageIOToolUtil.scale(renderedImage, width);
 
-		return ImageToolUtil.getBytes(renderedImage, imageBag.getType());
+		return ImageIOToolUtil.getBytes(renderedImage, imageBag.getType());
 	}
 
 	private final byte[] _bytes;

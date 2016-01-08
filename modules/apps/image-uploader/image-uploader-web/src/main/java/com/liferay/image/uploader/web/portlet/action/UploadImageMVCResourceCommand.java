@@ -18,7 +18,7 @@ import com.liferay.image.uploader.web.constants.ImageUploaderPortletKeys;
 import com.liferay.image.uploader.web.util.UploadImageUtil;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -86,9 +86,9 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 			MimeResponse mimeResponse, InputStream tempImageStream)
 		throws Exception {
 
-		ImageBag imageBag = ImageToolUtil.read(tempImageStream);
+		ImageBag imageBag = ImageIOToolUtil.read(tempImageStream);
 
-		byte[] bytes = ImageToolUtil.getBytes(
+		byte[] bytes = ImageIOToolUtil.getBytes(
 			imageBag.getRenderedImage(), imageBag.getType());
 
 		String contentType = MimeTypesUtil.getExtensionContentType(

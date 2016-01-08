@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
@@ -118,12 +119,10 @@ import com.liferay.portlet.expando.util.ExpandoBridgeUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -1921,7 +1920,7 @@ public class DLFileEntryLocalServiceImpl
 			String contentType = largeImage.getType();
 
 			if (bytes != null) {
-				ImageBag imageBag = ImageToolUtil.read(bytes);
+				ImageBag imageBag = ImageIOToolUtil.read(bytes);
 
 				renderedImage = imageBag.getRenderedImage();
 
@@ -1934,12 +1933,12 @@ public class DLFileEntryLocalServiceImpl
 				int width = PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH);
 
-				RenderedImage thumbnailRenderedImage = ImageToolUtil.scale(
+				RenderedImage thumbnailRenderedImage = ImageIOToolUtil.scale(
 					renderedImage, height, width);
 
 				imageLocalService.updateImage(
 					smallImageId,
-					ImageToolUtil.getBytes(
+					ImageIOToolUtil.getBytes(
 						thumbnailRenderedImage, contentType));
 			}
 		}

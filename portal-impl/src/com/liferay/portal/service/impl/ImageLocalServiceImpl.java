@@ -20,6 +20,7 @@ import com.liferay.portal.image.HookFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.Hook;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Date;
 import java.util.List;
 
@@ -152,7 +152,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		Image image = null;
 
 		try {
-			image = ImageToolUtil.getImage(bytes);
+			image = ImageIOToolUtil.getImage(bytes);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -199,7 +199,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		Image image = null;
 
 		try {
-			image = ImageToolUtil.getImage(file);
+			image = ImageIOToolUtil.getImage(file);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -217,7 +217,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		Image image = null;
 
 		try {
-			image = ImageToolUtil.getImage(is);
+			image = ImageIOToolUtil.getImage(is);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -236,7 +236,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		Image image = null;
 
 		try {
-			image = ImageToolUtil.getImage(is, cleanUpStream);
+			image = ImageIOToolUtil.getImage(is, cleanUpStream);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);

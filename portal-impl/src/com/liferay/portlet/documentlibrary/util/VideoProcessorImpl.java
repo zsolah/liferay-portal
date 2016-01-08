@@ -18,6 +18,7 @@ import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,10 +50,8 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.InputStream;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -301,7 +300,7 @@ public class VideoProcessorImpl
 		if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1) ||
 			isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2)) {
 
-			ImageBag imageBag = ImageToolUtil.read(file);
+			ImageBag imageBag = ImageIOToolUtil.read(file);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 

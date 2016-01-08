@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,11 +40,9 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -285,7 +284,7 @@ public class ImageProcessorImpl
 
 			byte[] bytes = FileUtil.getBytes(inputStream);
 
-			ImageBag imageBag = ImageToolUtil.read(bytes);
+			ImageBag imageBag = ImageIOToolUtil.read(bytes);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -402,7 +401,7 @@ public class ImageProcessorImpl
 			file = FileUtil.createTempFile(type);
 
 			try (FileOutputStream fos = new FileOutputStream(file)) {
-				ImageToolUtil.write(renderedImage, type, fos);
+				ImageIOToolUtil.write(renderedImage, type, fos);
 			}
 
 			addFileToStore(

@@ -14,14 +14,14 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.image.ImageIOToolImpl;
 import com.liferay.portal.image.ImageToolImpl;
+import com.liferay.portal.kernel.image.ImageIOTool;
 import com.liferay.portal.kernel.image.ImageTool;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-
 import java.io.File;
-
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -83,13 +83,13 @@ public class LiferayPDFBoxConverter {
 		RenderedImage renderedImage = pdPage.convertToImage(
 			BufferedImage.TYPE_INT_RGB, _dpi);
 
-		ImageTool imageTool = ImageToolImpl.getInstance();
+		ImageIOTool imageIOTool = ImageIOToolImpl.getInstance();
 
 		if (_height != 0) {
-			renderedImage = imageTool.scale(renderedImage, _width, _height);
+			renderedImage = imageIOTool.scale(renderedImage, _width, _height);
 		}
 		else {
-			renderedImage = imageTool.scale(renderedImage, _width);
+			renderedImage = imageIOTool.scale(renderedImage, _width);
 		}
 
 		outputFile.createNewFile();

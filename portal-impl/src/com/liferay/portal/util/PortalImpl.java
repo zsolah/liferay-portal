@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -220,22 +220,17 @@ import com.liferay.util.Encryptor;
 import com.liferay.util.JS;
 
 import java.awt.image.RenderedImage;
-
 import java.io.IOException;
 import java.io.Serializable;
-
 import java.lang.reflect.Method;
-
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -278,7 +273,6 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -7040,7 +7034,7 @@ public class PortalImpl implements Portal {
 
 		if ((maxHeight > 0) || (maxWidth > 0)) {
 			try {
-				ImageBag imageBag = ImageToolUtil.read(bytes);
+				ImageBag imageBag = ImageIOToolUtil.read(bytes);
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -7048,10 +7042,10 @@ public class PortalImpl implements Portal {
 					throw new ImageTypeException();
 				}
 
-				renderedImage = ImageToolUtil.scale(
+				renderedImage = ImageIOToolUtil.scale(
 					renderedImage, maxHeight, maxWidth);
 
-				bytes = ImageToolUtil.getBytes(
+				bytes = ImageIOToolUtil.getBytes(
 					renderedImage, imageBag.getType());
 			}
 			catch (IOException ioe) {

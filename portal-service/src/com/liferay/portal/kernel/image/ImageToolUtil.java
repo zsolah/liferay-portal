@@ -19,15 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Image;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-
-import java.util.concurrent.Future;
 
 /**
  * The Image utility class.
@@ -37,51 +30,6 @@ import java.util.concurrent.Future;
  */
 @ProviderType
 public class ImageToolUtil {
-
-	/**
-	 * Returns the image converted to the type.
-	 *
-	 * @param  sourceImage the image to convert
-	 * @param  type the image type to convert to (e.g., "gif", "jpg", etc.)
-	 * @return the converted image
-	 */
-	public static BufferedImage convertImageType(
-		BufferedImage sourceImage, int type) {
-
-		return getImageTool().convertImageType(sourceImage, type);
-	}
-
-	public static RenderedImage crop(
-		RenderedImage renderedImage, int height, int width, int x, int y) {
-
-		return getImageTool().crop(renderedImage, height, width, x, y);
-	}
-
-	/**
-	 * Returns the rendered image as a {@link BufferedImage}.
-	 *
-	 * @param  renderedImage the original image
-	 * @return the converted image
-	 */
-	public static BufferedImage getBufferedImage(RenderedImage renderedImage) {
-		return getImageTool().getBufferedImage(renderedImage);
-	}
-
-	/**
-	 * Returns the image as a <code>byte[]</code>.
-	 *
-	 * @param  renderedImage the image to read
-	 * @param  contentType the content type (e.g., "image/jpeg") or image type
-	 *         (e.g., "jpg") to use during encoding
-	 * @return the encoded image
-	 * @throws IOException if an IO exception occurred
-	 */
-	public static byte[] getBytes(
-			RenderedImage renderedImage, String contentType)
-		throws IOException {
-
-		return getImageTool().getBytes(renderedImage, contentType);
-	}
 
 	public static Image getDefaultCompanyLogo() {
 		return getImageTool().getDefaultCompanyLogo();
@@ -103,24 +51,6 @@ public class ImageToolUtil {
 		return getImageTool().getDefaultUserMalePortrait();
 	}
 
-	public static Image getImage(byte[] bytes) throws IOException {
-		return getImageTool().getImage(bytes);
-	}
-
-	public static Image getImage(File file) throws IOException {
-		return getImageTool().getImage(file);
-	}
-
-	public static Image getImage(InputStream is) throws IOException {
-		return getImageTool().getImage(is);
-	}
-
-	public static Image getImage(InputStream is, boolean cleanUpStream)
-		throws IOException {
-
-		return getImageTool().getImage(is, cleanUpStream);
-	}
-
 	public static ImageTool getImageTool() {
 		PortalRuntimePermission.checkGetBeanProperty(ImageToolUtil.class);
 
@@ -129,80 +59,6 @@ public class ImageToolUtil {
 
 	public static boolean isNullOrDefaultSpacer(byte[] bytes) {
 		return getImageTool().isNullOrDefaultSpacer(bytes);
-	}
-
-	/**
-	 * Detects the image format and creates an {@link
-	 * com.liferay.portal.kernel.image.ImageBag} containing the {@link
-	 * RenderedImage} and image type.
-	 *
-	 * @param  bytes the bytes to read
-	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
-	 * @throws IOException if an IO exception occurred
-	 */
-	public static ImageBag read(byte[] bytes) throws IOException {
-		return getImageTool().read(bytes);
-	}
-
-	/**
-	 * Detects the image format and creates an {@link
-	 * com.liferay.portal.kernel.image.ImageBag} containing the {@link
-	 * RenderedImage} and image type.
-	 *
-	 * @param  file the file to read
-	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
-	 * @throws IOException if an IO exception occurred
-	 */
-	public static ImageBag read(File file) throws IOException {
-		return getImageTool().read(file);
-	}
-
-	public static ImageBag read(InputStream inputStream) throws IOException {
-		return getImageTool().read(inputStream);
-	}
-
-	/**
-	 * Returns the scaled image based on the given width with the height
-	 * calculated to preserve aspect ratio.
-	 *
-	 * @param  renderedImage the image to scale
-	 * @param  width the new width; also used to calculate the new height
-	 * @return the scaled image
-	 */
-	public static RenderedImage scale(RenderedImage renderedImage, int width) {
-		return getImageTool().scale(renderedImage, width);
-	}
-
-	/**
-	 * Returns the scaled image based on the maximum height and width given
-	 * while preserving the aspect ratio. If the image is already larger in both
-	 * dimensions, the image will not be scaled.
-	 *
-	 * @param  renderedImage the image to scale
-	 * @param  maxHeight the maximum height allowed for image
-	 * @param  maxWidth the maximum width allowed for image
-	 * @return the scaled image
-	 */
-	public static RenderedImage scale(
-		RenderedImage renderedImage, int maxHeight, int maxWidth) {
-
-		return getImageTool().scale(renderedImage, maxHeight, maxWidth);
-	}
-
-	/**
-	 * Encodes the image using the content or image type.
-	 *
-	 * @param  renderedImage the image to encode
-	 * @param  contentType the content type (e.g., "image/jpeg") or image type
-	 *         (e.g., "jpg") to use during encoding
-	 * @param  os the stream to write to
-	 * @throws IOException if an IO exception occurred
-	 */
-	public static void write(
-			RenderedImage renderedImage, String contentType, OutputStream os)
-		throws IOException {
-
-		getImageTool().write(renderedImage, contentType, os);
 	}
 
 	public void setImageTool(ImageTool imageTool) {

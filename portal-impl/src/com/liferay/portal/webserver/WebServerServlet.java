@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -99,16 +100,12 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.URL;
-
 import java.text.Format;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -504,7 +501,7 @@ public class WebServerServlet extends HttpServlet {
 			ImageBag imageBag = null;
 
 			if (image.getImageId() == 0) {
-				imageBag = ImageToolUtil.read(textObj);
+				imageBag = ImageIOToolUtil.read(textObj);
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -522,13 +519,13 @@ public class WebServerServlet extends HttpServlet {
 			}
 
 			if (image.getImageId() != 0) {
-				imageBag = ImageToolUtil.read(textObj);
+				imageBag = ImageIOToolUtil.read(textObj);
 			}
 
-			RenderedImage renderedImage = ImageToolUtil.scale(
+			RenderedImage renderedImage = ImageIOToolUtil.scale(
 				imageBag.getRenderedImage(), height, width);
 
-			return ImageToolUtil.getBytes(renderedImage, imageBag.getType());
+			return ImageIOToolUtil.getBytes(renderedImage, imageBag.getType());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -923,7 +920,7 @@ public class WebServerServlet extends HttpServlet {
 
 			InputStream inputStream = fileVersion.getContentStream(true);
 
-			Image image = ImageToolUtil.getImage(inputStream);
+			Image image = ImageIOToolUtil.getImage(inputStream);
 
 			writeImage(image, request, response);
 

@@ -14,12 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.image.ImageIOToolImpl;
 import com.liferay.portal.image.ImageToolImpl;
+import com.liferay.portal.kernel.image.ImageIOTool;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-
 import com.xuggle.ferry.RefCounted;
 import com.xuggle.xuggler.Global;
 import com.xuggle.xuggler.IAudioResampler;
@@ -40,10 +41,8 @@ import com.xuggle.xuggler.video.IConverter;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.FileOutputStream;
-
 import java.util.List;
 import java.util.Properties;
 
@@ -302,9 +301,9 @@ public abstract class LiferayConverter {
 
 				thumbnailFile.createNewFile();
 
-				ImageTool imageTool = ImageToolImpl.getInstance();
+				ImageIOTool imageIOTool = ImageIOToolImpl.getInstance();
 
-				RenderedImage renderedImage = imageTool.scale(
+				RenderedImage renderedImage = imageIOTool.scale(
 					bufferedImage, thumbnailHeight, thumbnailWidth);
 
 				ImageIO.write(

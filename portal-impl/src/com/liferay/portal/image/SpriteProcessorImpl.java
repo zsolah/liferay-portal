@@ -15,7 +15,7 @@
 package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,20 +39,16 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.net.URL;
 import java.net.URLConnection;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
-
 import javax.media.jai.LookupTableJAI;
 import javax.media.jai.PlanarImage;
 import javax.media.jai.RasterFactory;
@@ -60,7 +56,6 @@ import javax.media.jai.TiledImage;
 import javax.media.jai.operator.LookupDescriptor;
 import javax.media.jai.operator.MosaicDescriptor;
 import javax.media.jai.operator.TranslateDescriptor;
-
 import javax.servlet.ServletContext;
 
 /**
@@ -153,7 +148,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			}
 
 			try {
-				ImageBag imageBag = ImageToolUtil.read(
+				ImageBag imageBag = ImageIOToolUtil.read(
 					urlConnection.getInputStream());
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();

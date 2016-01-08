@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1215,11 +1215,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH;
 		}
 
-		RenderedImage thumbnailRenderedImage = ImageToolUtil.scale(
+		RenderedImage thumbnailRenderedImage = ImageIOToolUtil.scale(
 			renderedImage, PrefsPropsUtil.getInteger(maxHeightPropsKey),
 			PrefsPropsUtil.getInteger(maxWidthPropsKey));
 
-		byte[] bytes = ImageToolUtil.getBytes(thumbnailRenderedImage, type);
+		byte[] bytes = ImageIOToolUtil.getBytes(thumbnailRenderedImage, type);
 
 		File file = null;
 
@@ -1238,7 +1238,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void storeThumbnailImages(FileVersion fileVersion, File file)
 		throws Exception {
 
-		ImageBag imageBag = ImageToolUtil.read(file);
+		ImageBag imageBag = ImageIOToolUtil.read(file);
 
 		RenderedImage renderedImage = imageBag.getRenderedImage();
 
