@@ -17,7 +17,6 @@ package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -202,51 +201,6 @@ public class ImageToolImpl implements ImageTool {
 		Gif89Encoder encoder = new Gif89Encoder(bufferedImage);
 
 		encoder.encode(os);
-	}
-
-	@Override
-	public void encodeWBMP(RenderedImage renderedImage, OutputStream os)
-		throws IOException {
-
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
-
-		SampleModel sampleModel = bufferedImage.getSampleModel();
-
-		int type = sampleModel.getDataType();
-
-		if ((bufferedImage.getType() != BufferedImage.TYPE_BYTE_BINARY) ||
-			(type < DataBuffer.TYPE_BYTE) || (type > DataBuffer.TYPE_INT) ||
-			(sampleModel.getNumBands() != 1) ||
-			(sampleModel.getSampleSize(0) != 1)) {
-
-			BufferedImage binaryImage = new BufferedImage(
-				bufferedImage.getWidth(), bufferedImage.getHeight(),
-				BufferedImage.TYPE_BYTE_BINARY);
-
-			Graphics graphics = binaryImage.getGraphics();
-
-			graphics.drawImage(bufferedImage, 0, 0, null);
-
-			renderedImage = binaryImage;
-		}
-
-		if (!ImageIO.write(renderedImage, "wbmp", os)) {
-
-			// See http://www.jguru.com/faq/view.jsp?EID=127723
-
-			os.write(0);
-			os.write(0);
-			os.write(toMultiByte(bufferedImage.getWidth()));
-			os.write(toMultiByte(bufferedImage.getHeight()));
-
-			DataBuffer dataBuffer = bufferedImage.getData().getDataBuffer();
-
-			int size = dataBuffer.getSize();
-
-			for (int i = 0; i < size; i++) {
-				os.write((byte)dataBuffer.getElem(i));
-			}
-		}
 	}
 
 	@Override

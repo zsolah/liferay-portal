@@ -72,19 +72,6 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Encodes the image using the WBMP format.
-	 *
-	 * @param  renderedImage the image to encode
-	 * @param  os the stream to write to
-	 * @throws IOException if an IO exception occurred
-	 */
-	public static void encodeWBMP(RenderedImage renderedImage, OutputStream os)
-		throws IOException {
-
-		getImageTool().encodeWBMP(renderedImage, os);
-	}
-
-	/**
 	 * Returns the rendered image as a {@link BufferedImage}.
 	 *
 	 * @param  renderedImage the original image
