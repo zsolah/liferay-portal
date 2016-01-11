@@ -2,13 +2,13 @@
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General public static License as published by the Free
+ * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
  *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General public static License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
 
@@ -19,6 +19,7 @@ import com.liferay.portal.model.Image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,21 +33,28 @@ import java.io.OutputStream;
  */
 public class ImageIOToolUtil {
 
-	public static BufferedImage convertImageType(BufferedImage sourceImage, int type) {
+	public static BufferedImage convertImageType(
+		BufferedImage sourceImage, int type) {
+
 		return getImageIOTool().convertImageType(sourceImage, type);
 	}
 
 	public static RenderedImage crop(
 		RenderedImage renderedImage, int height, int width, int x, int y) {
+
 		return getImageIOTool().crop(renderedImage, height, width, x, y);
 	}
 
-	public static BufferedImage getBufferedImage(RenderedImage paramRenderedImage) {
+	public static BufferedImage getBufferedImage(
+		RenderedImage paramRenderedImage) {
+
 		return getImageIOTool().getBufferedImage(paramRenderedImage);
 	}
 
-	public static byte[] getBytes(RenderedImage renderedImage, String contentType)
+	public static byte[] getBytes(
+			RenderedImage renderedImage, String contentType)
 		throws IOException {
+
 		return getImageIOTool().getBytes(renderedImage, contentType);
 	}
 
@@ -64,7 +72,14 @@ public class ImageIOToolUtil {
 
 	public static Image getImage(InputStream is, boolean cleanUpStream)
 		throws IOException {
+
 		return getImageIOTool().getImage(is, cleanUpStream);
+	}
+
+	public static ImageIOTool getImageIOTool() {
+		PortalRuntimePermission.checkGetBeanProperty(ImageIOToolUtil.class);
+
+		return _imageIOTool;
 	}
 
 	public static ImageBag read(byte[] bytes) throws IOException {
@@ -85,19 +100,15 @@ public class ImageIOToolUtil {
 
 	public static RenderedImage scale(
 		RenderedImage renderedImage, int maxHeight, int maxWidth) {
+
 		return getImageIOTool().scale(renderedImage, maxHeight, maxWidth);
 	}
 
 	public static void write(
 			RenderedImage renderedImage, String contentType, OutputStream os)
 		throws IOException {
+
 		getImageIOTool().write(renderedImage, contentType, os);
-	}
-
-	public static ImageIOTool getImageIOTool() {
-		PortalRuntimePermission.checkGetBeanProperty(ImageIOToolUtil.class);
-
-		return _imageIOTool;
 	}
 
 	public void setImageIOTool(ImageIOTool imageIOTool) {
@@ -107,4 +118,5 @@ public class ImageIOToolUtil {
 	}
 
 	private static ImageIOTool _imageIOTool;
+
 }
