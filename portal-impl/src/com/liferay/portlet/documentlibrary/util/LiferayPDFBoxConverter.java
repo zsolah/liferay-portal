@@ -15,13 +15,13 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.image.ImageIOToolImpl;
-import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.image.ImageIOTool;
-import com.liferay.portal.kernel.image.ImageTool;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+
 import java.io.File;
+
 import java.util.List;
 
 import javax.imageio.ImageIO;

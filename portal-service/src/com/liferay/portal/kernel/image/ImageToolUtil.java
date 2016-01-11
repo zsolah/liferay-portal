@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Image;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
  * The Image utility class.
  *

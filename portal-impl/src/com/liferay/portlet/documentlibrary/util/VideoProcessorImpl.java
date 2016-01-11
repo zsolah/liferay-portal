@@ -19,7 +19,6 @@ import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageIOToolUtil;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -50,8 +49,10 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.awt.image.RenderedImage;
+
 import java.io.File;
 import java.io.InputStream;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;

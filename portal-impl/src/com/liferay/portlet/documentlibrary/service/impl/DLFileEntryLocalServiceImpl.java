@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageIOToolUtil;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
@@ -119,10 +118,12 @@ import com.liferay.portlet.expando.util.ExpandoBridgeUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 
 import java.awt.image.RenderedImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;

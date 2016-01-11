@@ -100,12 +100,16 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.awt.image.RenderedImage;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URL;
+
 import java.text.Format;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

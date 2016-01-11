@@ -15,14 +15,14 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.image.ImageIOToolImpl;
-import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageIOTool;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.awt.image.RenderedImage;
+
 import java.io.File;
+
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -77,6 +77,7 @@ public class ThumbnailBuilder {
 		ImageIO.write(renderedImage, imageBag.getType(), thumbnailFile);
 	}
 
-	private static final ImageIOTool _imageIOToolUtil = ImageIOToolImpl.getInstance();
+	private static final ImageIOTool _imageIOToolUtil =
+		ImageIOToolImpl.getInstance();
 
 }

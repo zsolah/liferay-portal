@@ -29,9 +29,11 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.awt.image.RenderedImage;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -161,6 +163,42 @@ public class ImageToolImpl implements ImageTool {
 		return _defaultUserMalePortrait;
 	}
 
+	public Image getImage(byte[] bytes) throws IOException {
+		if (bytes == null) {
+			return null;
+		}
+
+		ImageBag imageBag = read(bytes);
+
+		RenderedImage renderedImage = imageBag.getRenderedImage();
+
+		if (renderedImage == null) {
+			throw new IOException("Unable to decode image");
+		}
+
+		String type = imageBag.getType();
+
+		int height = renderedImage.getHeight();
+		int width = renderedImage.getWidth();
+		int size = bytes.length;
+
+		Image image = new ImageImpl();
+
+		image.setTextObj(bytes);
+		image.setType(type);
+		image.setHeight(height);
+		image.setWidth(width);
+		image.setSize(size);
+
+		return image;
+	}
+
+	public Image getImage(InputStream is) throws IOException {
+		byte[] bytes = _fileUtil.getBytes(is, -1, true);
+
+		return getImage(bytes);
+	}
+
 	@Override
 	public boolean isNullOrDefaultSpacer(byte[] bytes) {
 		if (ArrayUtil.isEmpty(bytes) ||
@@ -171,6 +209,10 @@ public class ImageToolImpl implements ImageTool {
 		else {
 			return false;
 		}
+	}
+
+	private ImageToolImpl() {
+		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
 	}
 
 	private ImageBag read(byte[] bytes) throws IOException {
@@ -234,46 +276,6 @@ public class ImageToolImpl implements ImageTool {
 		}
 
 		return new ImageBag(renderedImage, type);
-	}
-
-	private ImageToolImpl() {
-		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
-	}
-
-	public Image getImage(InputStream is) throws IOException {
-		byte[] bytes = _fileUtil.getBytes(is, -1, true);
-
-		return getImage(bytes);
-	}
-
-	public Image getImage(byte[] bytes) throws IOException {
-		if (bytes == null) {
-			return null;
-		}
-
-		ImageBag imageBag = read(bytes);
-
-		RenderedImage renderedImage = imageBag.getRenderedImage();
-
-		if (renderedImage == null) {
-			throw new IOException("Unable to decode image");
-		}
-
-		String type = imageBag.getType();
-
-		int height = renderedImage.getHeight();
-		int width = renderedImage.getWidth();
-		int size = bytes.length;
-
-		Image image = new ImageImpl();
-
-		image.setTextObj(bytes);
-		image.setType(type);
-		image.setHeight(height);
-		image.setWidth(width);
-		image.setSize(size);
-
-		return image;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);

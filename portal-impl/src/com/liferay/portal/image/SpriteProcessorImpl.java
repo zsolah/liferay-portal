@@ -39,16 +39,20 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.net.URL;
 import java.net.URLConnection;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
+
 import javax.media.jai.LookupTableJAI;
 import javax.media.jai.PlanarImage;
 import javax.media.jai.RasterFactory;
@@ -56,6 +60,7 @@ import javax.media.jai.TiledImage;
 import javax.media.jai.operator.LookupDescriptor;
 import javax.media.jai.operator.MosaicDescriptor;
 import javax.media.jai.operator.TranslateDescriptor;
+
 import javax.servlet.ServletContext;
 
 /**

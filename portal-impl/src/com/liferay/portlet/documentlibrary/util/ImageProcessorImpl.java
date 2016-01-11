@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageIOToolUtil;
 import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -38,15 +37,15 @@ import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
-import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.Future;
 
 /**
  * @author Sergio González
