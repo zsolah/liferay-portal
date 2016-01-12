@@ -34,13 +34,11 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -57,6 +55,10 @@ import javax.imageio.stream.ImageInputStream;
  */
 
 public class ImageIOToolImpl implements ImageIOTool {
+
+	public static ImageIOTool getInstance() {
+		return _instance;
+	}
 
 	public BufferedImage convertImageType(BufferedImage sourceImage, int type) {
 		BufferedImage targetImage = new BufferedImage(
@@ -397,5 +399,7 @@ public class ImageIOToolImpl implements ImageIOTool {
 		}
 
 		private static final FileImpl _fileUtil = FileImpl.getInstance();
+
+		private static final ImageIOTool _instance = new ImageIOToolImpl();
 
 }
