@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Image
+Bundle-SymbolicName: com.liferay.image
+Bundle-Version: 1.0.0
+
+Include-Resource: classes,
+lib/biz.aQute.bndlib.jar
