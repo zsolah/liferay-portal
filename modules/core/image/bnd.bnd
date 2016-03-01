@@ -2,5 +2,13 @@ Bundle-Name: Liferay Portal Image
 Bundle-SymbolicName: com.liferay.image
 Bundle-Version: 1.0.0
 
-Include-Resource: classes,
-lib/biz.aQute.bndlib.jar
+Include-Resource: classes,\
+@lib/biz.aQute.bndlib.jar,\
+@lib/common-image.jar,\
+@lib/common-io.jar,\
+@lib/common-lang.jar,\
+@lib/imageio-bmp.jar,\
+@lib/imageio-core.jar,\
+@lib/imageio-jpeg.jar,\
+@lib/imageio-metadata.jar,\
+@lib/imageio-tiff.jar
