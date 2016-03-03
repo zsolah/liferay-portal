@@ -14,12 +14,11 @@
 
 package com.liferay.document.library.kernel.util;
 
-import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.io.InputStream;
-
 import java.util.Set;
 
 /**
@@ -28,155 +27,81 @@ import java.util.Set;
 public class ImageProcessorUtil {
 
 	public static void cleanUp(FileEntry fileEntry) {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor != null) {
-			imageProcessor.cleanUp(fileEntry);
-		}
+		_imageProcessor.cleanUp(fileEntry);
 	}
 
 	public static void cleanUp(FileVersion fileVersion) {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor != null) {
-			imageProcessor.cleanUp(fileVersion);
-		}
+		_imageProcessor.cleanUp(fileVersion);
 	}
 
 	public static void generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		ImageProcessor imageProcessor = getImageProcessor();
-
-		if (imageProcessor != null) {
-			imageProcessor.generateImages(
-				sourceFileVersion, destinationFileVersion);
-		}
+		_imageProcessor.generateImages(
+			sourceFileVersion, destinationFileVersion);
 	}
 
 	public static Set<String> getImageMimeTypes() {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor == null) {
-			return null;
-		}
-
-		return imageProcessor.getImageMimeTypes();
-	}
-
-	public static ImageProcessor getImageProcessor() {
-		return (ImageProcessor)DLProcessorRegistryUtil.getDLProcessor(
-			DLProcessorConstants.IMAGE_PROCESSOR);
+		return _imageProcessor.getImageMimeTypes();
 	}
 
 	public static InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
-		ImageProcessor imageProcessor = getImageProcessor();
-
-		if (imageProcessor == null) {
-			return null;
-		}
-
-		return imageProcessor.getPreviewAsStream(fileVersion);
+		return _imageProcessor.getPreviewAsStream(fileVersion);
 	}
 
 	public static long getPreviewFileSize(FileVersion fileVersion)
 		throws Exception {
 
-		ImageProcessor imageProcessor = getImageProcessor();
-
-		if (imageProcessor == null) {
-			return 0;
-		}
-
-		return imageProcessor.getPreviewFileSize(fileVersion);
+		return _imageProcessor.getPreviewFileSize(fileVersion);
 	}
 
 	public static String getPreviewType(FileVersion fileVersion) {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor == null) {
-			return null;
-		}
-
-		return imageProcessor.getPreviewType(fileVersion);
+		return _imageProcessor.getPreviewType(fileVersion);
 	}
 
 	public static InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
 
-		ImageProcessor imageProcessor = getImageProcessor();
-
-		if (imageProcessor == null) {
-			return null;
-		}
-
-		return imageProcessor.getThumbnailAsStream(fileVersion, index);
+		return _imageProcessor.getThumbnailAsStream(fileVersion, index);
 	}
 
 	public static long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		ImageProcessor imageProcessor = getImageProcessor();
-
-		if (imageProcessor == null) {
-			return 0;
-		}
-
-		return imageProcessor.getThumbnailFileSize(fileVersion, index);
+		return _imageProcessor.getThumbnailFileSize(fileVersion, index);
 	}
 
 	public static String getThumbnailType(FileVersion fileVersion) {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor == null) {
-			return null;
-		}
-
-		return imageProcessor.getThumbnailType(fileVersion);
+		return _imageProcessor.getThumbnailType(fileVersion);
 	}
 
 	public static boolean hasImages(FileVersion fileVersion) {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor == null) {
-			return false;
-		}
-
-		return imageProcessor.hasImages(fileVersion);
+		return _imageProcessor.hasImages(fileVersion);
 	}
 
 	public static boolean isImageSupported(FileVersion fileVersion) {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor == null) {
-			return false;
-		}
-
-		return imageProcessor.isImageSupported(fileVersion);
+		return _imageProcessor.isImageSupported(fileVersion);
 	}
 
 	public static boolean isImageSupported(String mimeType) {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor == null) {
-			return false;
-		}
-
-		return imageProcessor.isImageSupported(mimeType);
+		return _imageProcessor.isImageSupported(mimeType);
 	}
 
 	public static boolean isSupported(String mimeType) {
-		ImageProcessor imageProcessor = getImageProcessor();
 
-		if (imageProcessor == null) {
-			return false;
-		}
-
-		return imageProcessor.isSupported(mimeType);
+		return _imageProcessor.isSupported(mimeType);
 	}
 
 	public static void storeThumbnail(
@@ -185,23 +110,15 @@ public class ImageProcessorUtil {
 			String type)
 		throws Exception {
 
-		ImageProcessor imageProcessor = getImageProcessor();
-
-		if (imageProcessor != null) {
-			imageProcessor.storeThumbnail(
-				companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
-				custom2ImageId, is, type);
-		}
+		_imageProcessor.storeThumbnail(
+			companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
+			custom2ImageId, is, type);
 	}
 
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		ImageProcessor imageProcessor = getImageProcessor();
-
-		if (imageProcessor != null) {
-			imageProcessor.trigger(sourceFileVersion, destinationFileVersion);
-		}
+		_imageProcessor.trigger(sourceFileVersion, destinationFileVersion);
 	}
 
 	/**
@@ -211,4 +128,6 @@ public class ImageProcessorUtil {
 	public void setImageProcessor(ImageProcessor imageProcessor) {
 	}
 
+	private static final ImageProcessor _imageProcessor =
+		ProxyFactory.newServiceTrackedInstance(ImageProcessor.class);
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.image;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
@@ -41,21 +41,22 @@ import com.liferay.portal.util.PropsValues;
 
 import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.Future;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  * @author Alexander Chow
  * @author Ivica Cardic
  */
+@Component(service = ImageProcessor.class)
 public class ImageProcessorImpl
 	extends DLPreviewableProcessor implements ImageProcessor {
 
