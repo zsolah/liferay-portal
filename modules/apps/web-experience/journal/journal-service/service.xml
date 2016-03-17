@@ -152,6 +152,14 @@
 			<finder-column name="indexable" />
 			<finder-column name="status" arrayable-operator="OR" />
 		</finder>
+		<finder name="G_A_F_C_U_ST" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="articleId" />
+			<finder-column name="folderId" />
+			<finder-column name="classNameId" />
+			<finder-column name="userId" />
+			<finder-column name="status"/>
+		</finder>
 		<finder name="G_U_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
