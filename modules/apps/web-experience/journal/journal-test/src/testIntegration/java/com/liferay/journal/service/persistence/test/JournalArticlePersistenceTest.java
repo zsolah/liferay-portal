@@ -525,6 +525,18 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_A_F_C_U_ST() throws Exception {
+		_persistence.countByG_A_F_C_U_ST(RandomTestUtil.nextLong(),
+			StringPool.BLANK, RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_A_F_C_U_ST(0L, StringPool.NULL, 0L, 0L, 0L, 0);
+
+		_persistence.countByG_A_F_C_U_ST(0L, (String)null, 0L, 0L, 0L, 0);
+	}
+
+	@Test
 	public void testCountByG_U_C() throws Exception {
 		_persistence.countByG_U_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

@@ -20286,6 +20286,1265 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	private static final String _FINDER_COLUMN_R_I_S_INDEXABLE_2 = "journalArticle.indexable = ? AND ";
 	private static final String _FINDER_COLUMN_R_I_S_STATUS_2 = "journalArticle.status = ?";
 	private static final String _FINDER_COLUMN_R_I_S_STATUS_7 = "journalArticle.status IN (";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_F_C_U_ST =
+		new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByG_A_F_C_U_ST",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_F_C_U_ST =
+		new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_F_C_U_ST",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			JournalArticleModelImpl.GROUPID_COLUMN_BITMASK |
+			JournalArticleModelImpl.ARTICLEID_COLUMN_BITMASK |
+			JournalArticleModelImpl.FOLDERID_COLUMN_BITMASK |
+			JournalArticleModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			JournalArticleModelImpl.USERID_COLUMN_BITMASK |
+			JournalArticleModelImpl.STATUS_COLUMN_BITMASK |
+			JournalArticleModelImpl.VERSION_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_A_F_C_U_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_F_C_U_ST",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @return the matching journal articles
+	 */
+	@Override
+	public List<JournalArticle> findByG_A_F_C_U_ST(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status) {
+		return findByG_A_F_C_U_ST(groupId, articleId, folderId, classNameId,
+			userId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @return the range of matching journal articles
+	 */
+	@Override
+	public List<JournalArticle> findByG_A_F_C_U_ST(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, int start, int end) {
+		return findByG_A_F_C_U_ST(groupId, articleId, folderId, classNameId,
+			userId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal articles
+	 */
+	@Override
+	public List<JournalArticle> findByG_A_F_C_U_ST(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return findByG_A_F_C_U_ST(groupId, articleId, folderId, classNameId,
+			userId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching journal articles
+	 */
+	@Override
+	public List<JournalArticle> findByG_A_F_C_U_ST(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_F_C_U_ST;
+			finderArgs = new Object[] {
+					groupId, articleId, folderId, classNameId, userId, status
+				};
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_F_C_U_ST;
+			finderArgs = new Object[] {
+					groupId, articleId, folderId, classNameId, userId, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<JournalArticle> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<JournalArticle>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (JournalArticle journalArticle : list) {
+					if ((groupId != journalArticle.getGroupId()) ||
+							!Validator.equals(articleId,
+								journalArticle.getArticleId()) ||
+							(folderId != journalArticle.getFolderId()) ||
+							(classNameId != journalArticle.getClassNameId()) ||
+							(userId != journalArticle.getUserId()) ||
+							(status != journalArticle.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(8 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(8);
+			}
+
+			query.append(_SQL_SELECT_JOURNALARTICLE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_GROUPID_2);
+
+			boolean bindArticleId = false;
+
+			if (articleId == null) {
+				query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_1);
+			}
+			else if (articleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_3);
+			}
+			else {
+				bindArticleId = true;
+
+				query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_FOLDERID_2);
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_USERID_2);
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(JournalArticleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindArticleId) {
+					qPos.add(articleId);
+				}
+
+				qPos.add(folderId);
+
+				qPos.add(classNameId);
+
+				qPos.add(userId);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<JournalArticle>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalArticle>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	@Override
+	public JournalArticle findByG_A_F_C_U_ST_First(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, OrderByComparator<JournalArticle> orderByComparator)
+		throws NoSuchArticleException {
+		JournalArticle journalArticle = fetchByG_A_F_C_U_ST_First(groupId,
+				articleId, folderId, classNameId, userId, status,
+				orderByComparator);
+
+		if (journalArticle != null) {
+			return journalArticle;
+		}
+
+		StringBundler msg = new StringBundler(14);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", articleId=");
+		msg.append(articleId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	@Override
+	public JournalArticle fetchByG_A_F_C_U_ST_First(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, OrderByComparator<JournalArticle> orderByComparator) {
+		List<JournalArticle> list = findByG_A_F_C_U_ST(groupId, articleId,
+				folderId, classNameId, userId, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	@Override
+	public JournalArticle findByG_A_F_C_U_ST_Last(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, OrderByComparator<JournalArticle> orderByComparator)
+		throws NoSuchArticleException {
+		JournalArticle journalArticle = fetchByG_A_F_C_U_ST_Last(groupId,
+				articleId, folderId, classNameId, userId, status,
+				orderByComparator);
+
+		if (journalArticle != null) {
+			return journalArticle;
+		}
+
+		StringBundler msg = new StringBundler(14);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", articleId=");
+		msg.append(articleId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	@Override
+	public JournalArticle fetchByG_A_F_C_U_ST_Last(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, OrderByComparator<JournalArticle> orderByComparator) {
+		int count = countByG_A_F_C_U_ST(groupId, articleId, folderId,
+				classNameId, userId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<JournalArticle> list = findByG_A_F_C_U_ST(groupId, articleId,
+				folderId, classNameId, userId, status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param id the primary key of the current journal article
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article
+	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
+	 */
+	@Override
+	public JournalArticle[] findByG_A_F_C_U_ST_PrevAndNext(long id,
+		long groupId, String articleId, long folderId, long classNameId,
+		long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws NoSuchArticleException {
+		JournalArticle journalArticle = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			JournalArticle[] array = new JournalArticleImpl[3];
+
+			array[0] = getByG_A_F_C_U_ST_PrevAndNext(session, journalArticle,
+					groupId, articleId, folderId, classNameId, userId, status,
+					orderByComparator, true);
+
+			array[1] = journalArticle;
+
+			array[2] = getByG_A_F_C_U_ST_PrevAndNext(session, journalArticle,
+					groupId, articleId, folderId, classNameId, userId, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected JournalArticle getByG_A_F_C_U_ST_PrevAndNext(Session session,
+		JournalArticle journalArticle, long groupId, String articleId,
+		long folderId, long classNameId, long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(9 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		query.append(_SQL_SELECT_JOURNALARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_GROUPID_2);
+
+		boolean bindArticleId = false;
+
+		if (articleId == null) {
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_1);
+		}
+		else if (articleId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_3);
+		}
+		else {
+			bindArticleId = true;
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_FOLDERID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(JournalArticleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindArticleId) {
+			qPos.add(articleId);
+		}
+
+		qPos.add(folderId);
+
+		qPos.add(classNameId);
+
+		qPos.add(userId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(journalArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<JournalArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @return the matching journal articles that the user has permission to view
+	 */
+	@Override
+	public List<JournalArticle> filterFindByG_A_F_C_U_ST(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status) {
+		return filterFindByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @return the range of matching journal articles that the user has permission to view
+	 */
+	@Override
+	public List<JournalArticle> filterFindByG_A_F_C_U_ST(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, int start, int end) {
+		return filterFindByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal articles that the user has permission to view
+	 */
+	@Override
+	public List<JournalArticle> filterFindByG_A_F_C_U_ST(long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_A_F_C_U_ST(groupId, articleId, folderId,
+				classNameId, userId, status, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(9);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_GROUPID_2);
+
+		boolean bindArticleId = false;
+
+		if (articleId == null) {
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_1);
+		}
+		else if (articleId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_3);
+		}
+		else {
+			bindArticleId = true;
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_FOLDERID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(JournalArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(JournalArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				JournalArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, JournalArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, JournalArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindArticleId) {
+				qPos.add(articleId);
+			}
+
+			qPos.add(folderId);
+
+			qPos.add(classNameId);
+
+			qPos.add(userId);
+
+			qPos.add(status);
+
+			return (List<JournalArticle>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param id the primary key of the current journal article
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article
+	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
+	 */
+	@Override
+	public JournalArticle[] filterFindByG_A_F_C_U_ST_PrevAndNext(long id,
+		long groupId, String articleId, long folderId, long classNameId,
+		long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_A_F_C_U_ST_PrevAndNext(id, groupId, articleId,
+				folderId, classNameId, userId, status, orderByComparator);
+		}
+
+		JournalArticle journalArticle = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			JournalArticle[] array = new JournalArticleImpl[3];
+
+			array[0] = filterGetByG_A_F_C_U_ST_PrevAndNext(session,
+					journalArticle, groupId, articleId, folderId, classNameId,
+					userId, status, orderByComparator, true);
+
+			array[1] = journalArticle;
+
+			array[2] = filterGetByG_A_F_C_U_ST_PrevAndNext(session,
+					journalArticle, groupId, articleId, folderId, classNameId,
+					userId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected JournalArticle filterGetByG_A_F_C_U_ST_PrevAndNext(
+		Session session, JournalArticle journalArticle, long groupId,
+		String articleId, long folderId, long classNameId, long userId,
+		int status, OrderByComparator<JournalArticle> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(10 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(9);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_GROUPID_2);
+
+		boolean bindArticleId = false;
+
+		if (articleId == null) {
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_1);
+		}
+		else if (articleId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_3);
+		}
+		else {
+			bindArticleId = true;
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_FOLDERID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(JournalArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(JournalArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				JournalArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, JournalArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, JournalArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindArticleId) {
+			qPos.add(articleId);
+		}
+
+		qPos.add(folderId);
+
+		qPos.add(classNameId);
+
+		qPos.add(userId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(journalArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<JournalArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_A_F_C_U_ST(long groupId, String articleId,
+		long folderId, long classNameId, long userId, int status) {
+		for (JournalArticle journalArticle : findByG_A_F_C_U_ST(groupId,
+				articleId, folderId, classNameId, userId, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(journalArticle);
+		}
+	}
+
+	/**
+	 * Returns the number of journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @return the number of matching journal articles
+	 */
+	@Override
+	public int countByG_A_F_C_U_ST(long groupId, String articleId,
+		long folderId, long classNameId, long userId, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_A_F_C_U_ST;
+
+		Object[] finderArgs = new Object[] {
+				groupId, articleId, folderId, classNameId, userId, status
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_COUNT_JOURNALARTICLE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_GROUPID_2);
+
+			boolean bindArticleId = false;
+
+			if (articleId == null) {
+				query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_1);
+			}
+			else if (articleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_3);
+			}
+			else {
+				bindArticleId = true;
+
+				query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_FOLDERID_2);
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_USERID_2);
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindArticleId) {
+					qPos.add(articleId);
+				}
+
+				qPos.add(folderId);
+
+				qPos.add(classNameId);
+
+				qPos.add(userId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @return the number of matching journal articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_A_F_C_U_ST(long groupId, String articleId,
+		long folderId, long classNameId, long userId, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_A_F_C_U_ST(groupId, articleId, folderId,
+				classNameId, userId, status);
+		}
+
+		StringBundler query = new StringBundler(7);
+
+		query.append(_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_GROUPID_2);
+
+		boolean bindArticleId = false;
+
+		if (articleId == null) {
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_1);
+		}
+		else if (articleId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_3);
+		}
+		else {
+			bindArticleId = true;
+
+			query.append(_FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_FOLDERID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_A_F_C_U_ST_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				JournalArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindArticleId) {
+				qPos.add(articleId);
+			}
+
+			qPos.add(folderId);
+
+			qPos.add(classNameId);
+
+			qPos.add(userId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_A_F_C_U_ST_GROUPID_2 = "journalArticle.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_1 = "journalArticle.articleId IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_2 = "journalArticle.articleId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_F_C_U_ST_ARTICLEID_3 = "(journalArticle.articleId IS NULL OR journalArticle.articleId = '') AND ";
+	private static final String _FINDER_COLUMN_G_A_F_C_U_ST_FOLDERID_2 = "journalArticle.folderId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_F_C_U_ST_CLASSNAMEID_2 = "journalArticle.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_F_C_U_ST_USERID_2 = "journalArticle.userId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_F_C_U_ST_STATUS_2 = "journalArticle.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_C = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -31786,6 +33045,35 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_I_S, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_I_S,
+					args);
+			}
+
+			if ((journalArticleModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_F_C_U_ST.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						journalArticleModelImpl.getOriginalGroupId(),
+						journalArticleModelImpl.getOriginalArticleId(),
+						journalArticleModelImpl.getOriginalFolderId(),
+						journalArticleModelImpl.getOriginalClassNameId(),
+						journalArticleModelImpl.getOriginalUserId(),
+						journalArticleModelImpl.getOriginalStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A_F_C_U_ST, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_F_C_U_ST,
+					args);
+
+				args = new Object[] {
+						journalArticleModelImpl.getGroupId(),
+						journalArticleModelImpl.getArticleId(),
+						journalArticleModelImpl.getFolderId(),
+						journalArticleModelImpl.getClassNameId(),
+						journalArticleModelImpl.getUserId(),
+						journalArticleModelImpl.getStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A_F_C_U_ST, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_F_C_U_ST,
 					args);
 			}
 

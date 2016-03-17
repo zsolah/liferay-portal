@@ -5959,6 +5959,370 @@ public class JournalArticleUtil {
 	}
 
 	/**
+	* Returns all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the matching journal articles
+	*/
+	public static List<JournalArticle> findByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status) {
+		return getPersistence()
+				   .findByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status);
+	}
+
+	/**
+	* Returns a range of all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles
+	*/
+	public static List<JournalArticle> findByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status, int start, int end) {
+		return getPersistence()
+				   .findByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles
+	*/
+	public static List<JournalArticle> findByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .findByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching journal articles
+	*/
+	public static List<JournalArticle> findByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article
+	* @throws NoSuchArticleException if a matching journal article could not be found
+	*/
+	public static JournalArticle findByG_A_F_C_U_ST_First(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws com.liferay.journal.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_A_F_C_U_ST_First(groupId, articleId, folderId,
+			classNameId, userId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static JournalArticle fetchByG_A_F_C_U_ST_First(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_A_F_C_U_ST_First(groupId, articleId, folderId,
+			classNameId, userId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article
+	* @throws NoSuchArticleException if a matching journal article could not be found
+	*/
+	public static JournalArticle findByG_A_F_C_U_ST_Last(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws com.liferay.journal.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_A_F_C_U_ST_Last(groupId, articleId, folderId,
+			classNameId, userId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static JournalArticle fetchByG_A_F_C_U_ST_Last(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_A_F_C_U_ST_Last(groupId, articleId, folderId,
+			classNameId, userId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static JournalArticle[] findByG_A_F_C_U_ST_PrevAndNext(long id,
+		long groupId, java.lang.String articleId, long folderId,
+		long classNameId, long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws com.liferay.journal.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_A_F_C_U_ST_PrevAndNext(id, groupId, articleId,
+			folderId, classNameId, userId, status, orderByComparator);
+	}
+
+	/**
+	* Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the matching journal articles that the user has permission to view
+	*/
+	public static List<JournalArticle> filterFindByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status) {
+		return getPersistence()
+				   .filterFindByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status);
+	}
+
+	/**
+	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles that the user has permission to view
+	*/
+	public static List<JournalArticle> filterFindByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles that the user has permission to view
+	*/
+	public static List<JournalArticle> filterFindByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static JournalArticle[] filterFindByG_A_F_C_U_ST_PrevAndNext(
+		long id, long groupId, java.lang.String articleId, long folderId,
+		long classNameId, long userId, int status,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws com.liferay.journal.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_A_F_C_U_ST_PrevAndNext(id, groupId,
+			articleId, folderId, classNameId, userId, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	*/
+	public static void removeByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status) {
+		getPersistence()
+			.removeByG_A_F_C_U_ST(groupId, articleId, folderId, classNameId,
+			userId, status);
+	}
+
+	/**
+	* Returns the number of journal articles where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the number of matching journal articles
+	*/
+	public static int countByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status) {
+		return getPersistence()
+				   .countByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status);
+	}
+
+	/**
+	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and folderId = &#63; and classNameId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param folderId the folder ID
+	* @param classNameId the class name ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the number of matching journal articles that the user has permission to view
+	*/
+	public static int filterCountByG_A_F_C_U_ST(long groupId,
+		java.lang.String articleId, long folderId, long classNameId,
+		long userId, int status) {
+		return getPersistence()
+				   .filterCountByG_A_F_C_U_ST(groupId, articleId, folderId,
+			classNameId, userId, status);
+	}
+
+	/**
 	* Returns all the journal articles where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID

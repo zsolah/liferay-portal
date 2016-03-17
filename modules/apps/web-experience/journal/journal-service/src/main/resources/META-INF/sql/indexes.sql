@@ -6,6 +6,7 @@ create index IX_E82F322B on JournalArticle (companyId, version, status);
 create index IX_EA05E9E1 on JournalArticle (displayDate, status);
 create index IX_D8EB0D84 on JournalArticle (groupId, DDMStructureKey[$COLUMN_LENGTH:75$]);
 create index IX_31B74F51 on JournalArticle (groupId, DDMTemplateKey[$COLUMN_LENGTH:75$]);
+create index IX_F9885E95 on JournalArticle (groupId, articleId[$COLUMN_LENGTH:75$], folderId, classNameId, userId, status);
 create index IX_4D5CD982 on JournalArticle (groupId, articleId[$COLUMN_LENGTH:75$], status);
 create unique index IX_85C52EEC on JournalArticle (groupId, articleId[$COLUMN_LENGTH:75$], version);
 create index IX_353BD560 on JournalArticle (groupId, classNameId, DDMStructureKey[$COLUMN_LENGTH:75$]);
