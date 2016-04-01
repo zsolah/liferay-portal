@@ -79,6 +79,12 @@ public class ScopeFacet extends MultiValueFacet {
 
 		long[] groupIds = getGroupIds(searchContext);
 
+		long scopeGroupId = 0;
+
+		if ((groupIds != null) && (groupIds.length == 1)) {
+			scopeGroupId = groupIds[0];
+		}
+
 		BooleanFilter facetBooleanFilter = new BooleanFilter();
 
 		if (ArrayUtil.isEmpty(groupIds) ||
@@ -102,8 +108,10 @@ public class ScopeFacet extends MultiValueFacet {
 				for (Group group : inactiveGroups) {
 					long groupId = group.getGroupId();
 
-					inactiveGroupIdsFilter.addRequiredTerm(
-						Field.GROUP_ID, groupId);
+					if (group.getGroupId() != scopeGroupId) {
+						inactiveGroupIdsFilter.addRequiredTerm(
+							Field.GROUP_ID, groupId);
+					}
 				}
 
 				if (inactiveGroupIdsFilter.hasClauses()) {
@@ -138,7 +146,7 @@ public class ScopeFacet extends MultiValueFacet {
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				if (!group.isActive()) {
+				if (!group.isActive() && (groupId != scopeGroupId)) {
 					continue;
 				}
 
