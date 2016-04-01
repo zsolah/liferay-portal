@@ -79,13 +79,44 @@ public class ScopeFacet extends MultiValueFacet {
 
 		long[] groupIds = getGroupIds(searchContext);
 
+		BooleanFilter facetBooleanFilter = new BooleanFilter();
+
 		if (ArrayUtil.isEmpty(groupIds) ||
 			((groupIds.length == 1) && (groupIds[0] == 0))) {
 
+			List<Group> inactiveGroups = new ArrayList<Group>();
+
+			try {
+				inactiveGroups = GroupLocalServiceUtil.getActiveGroups(
+					searchContext.getCompanyId(), false);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+			}
+
+			BooleanFilter inactiveGroupIdsFilter = new BooleanFilter();
+
+			if (!inactiveGroups.isEmpty()) {
+				for (Group group : inactiveGroups) {
+					long groupId = group.getGroupId();
+
+					inactiveGroupIdsFilter.addRequiredTerm(
+						Field.GROUP_ID, groupId);
+				}
+
+				if (inactiveGroupIdsFilter.hasClauses()) {
+					facetBooleanFilter.add(
+						inactiveGroupIdsFilter, BooleanClauseOccur.MUST_NOT);
+				}
+
+				return BooleanClauseFactoryUtil.createFilter(
+					searchContext, facetBooleanFilter, BooleanClauseOccur.MUST);
+			}
+
 			return null;
 		}
-
-		BooleanFilter facetBooleanFilter = new BooleanFilter();
 
 		long ownerUserId = searchContext.getOwnerUserId();
 
