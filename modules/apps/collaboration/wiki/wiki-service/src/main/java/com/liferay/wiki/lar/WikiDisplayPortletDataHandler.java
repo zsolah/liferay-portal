@@ -14,14 +14,19 @@
 
 package com.liferay.wiki.lar;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 
 import javax.portlet.PortletPreferences;
 
@@ -59,6 +64,12 @@ public class WikiDisplayPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
+
+		if (portletDataContext.addPrimaryKey(
+				WikiDisplayPortletDataHandler.class, "deleteData")) {
+
+			return portletPreferences;
+		}
 
 		if (portletPreferences == null) {
 			return portletPreferences;
