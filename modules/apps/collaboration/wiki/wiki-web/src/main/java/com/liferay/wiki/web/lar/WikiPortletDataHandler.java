@@ -22,6 +22,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
@@ -122,7 +124,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		_wikiNodeLocalService.deleteNodes(portletDataContext.getScopeGroupId());
+		_wikiNodeStagedModelRepository.deleteStagedModels(portletDataContext);
 
 		return portletPreferences;
 	}
@@ -145,14 +147,14 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery nodeActionableDynamicQuery =
-			_wikiNodeLocalService.getExportActionableDynamicQuery(
+		ExportActionableDynamicQuery nodeActionableDynamicQuery =
+			_wikiNodeStagedModelRepository.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		nodeActionableDynamicQuery.performActions();
 
-		ActionableDynamicQuery pageActionableDynamicQuery =
-			_wikiPageLocalService.getExportActionableDynamicQuery(
+		ExportActionableDynamicQuery pageActionableDynamicQuery =
+			_wikiPageStagedModelRepository.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		pageActionableDynamicQuery.performActions();
@@ -210,14 +212,14 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery nodeActionableDynamicQuery =
-			_wikiNodeLocalService.getExportActionableDynamicQuery(
+		ExportActionableDynamicQuery nodeActionableDynamicQuery =
+			_wikiNodeStagedModelRepository.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		nodeActionableDynamicQuery.performCount();
 
-		ActionableDynamicQuery pageExportActionableDynamicQuery =
-			_wikiPageLocalService.getExportActionableDynamicQuery(
+		ExportActionableDynamicQuery pageExportActionableDynamicQuery =
+			_wikiPageStagedModelRepository.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		pageExportActionableDynamicQuery.performCount();
@@ -228,21 +230,29 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.wiki.model.WikiNode)",
+		unbind = "-"
+	)
+	protected void setStagedModelRepository(
+		StagedModelRepository<WikiNode> stagedModelRepository) {
 
-		_wikiNodeLocalService = wikiNodeLocalService;
+		_wikiNodeStagedModelRepository = stagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.wiki.model.WikiPage)",
+		unbind = "-"
+	)
+	protected void setWikiPageStagedModelRepository(
+		StagedModelRepository<WikiPage> wikiPageStagedModelRepository) {
 
-		_wikiPageLocalService = wikiPageLocalService;
+		_wikiPageStagedModelRepository = wikiPageStagedModelRepository;
 	}
 
-	private WikiNodeLocalService _wikiNodeLocalService;
-	private WikiPageLocalService _wikiPageLocalService;
+	private StagedModelRepository<WikiNode> _wikiNodeStagedModelRepository;
+	private StagedModelRepository<WikiPage> _wikiPageStagedModelRepository;
 
 }
