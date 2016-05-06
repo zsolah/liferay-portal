@@ -91,10 +91,10 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
+import com.liferay.portlet.admin.util.CleanUpPortletPreferencesUtil;
 
 import java.io.File;
 import java.io.Serializable;
-
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -111,7 +111,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.apache.log4j.Level;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -173,6 +172,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("cleanUpPermissions")) {
 			CleanUpPermissionsUtil.cleanUpAddToPagePermissions(actionRequest);
+		}
+		else if (cmd.equals("cleanUpPortletPreferences")) {
+			CleanUpPortletPreferencesUtil.
+				cleanUpLayoutRevisionPortletPreferences();
 		}
 		else if (cmd.startsWith("convertProcess.")) {
 			redirect = convertProcess(actionRequest, actionResponse, cmd);
