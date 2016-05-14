@@ -6,6 +6,7 @@ import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepo
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -31,6 +32,15 @@ public class WikiNodeStagedModelRepository extends BaseStagedModelRepository<Wik
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			node);
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setUuid(node.getUuid());
+		}
+		else {
+			String nodeName = getNodeName(
+				portletDataContext, node, node.getName(), 2);
+			node.setName(nodeName);
+		}
 
 		return _wikiNodeLocalService.addNode(
 			portletDataContext.getUserId(node.getUserUuid()), node.getName(),
@@ -102,6 +112,25 @@ public class WikiNodeStagedModelRepository extends BaseStagedModelRepository<Wik
 		return _wikiNodeLocalService.updateNode(
 				node.getNodeId(), node.getName(), node.getDescription(),
 				serviceContext);
+	}
+
+	protected String getNodeName(
+			PortletDataContext portletDataContext, WikiNode node, String name,
+			int count) {
+
+		WikiNode existingNode = _wikiNodeLocalService.fetchNode(
+			portletDataContext.getScopeGroupId(), name);
+
+		if (existingNode == null) {
+			return name;
+		}
+
+		String nodeName = node.getName();
+
+		return getNodeName(
+			portletDataContext, node,
+			nodeName.concat(StringPool.SPACE).concat(String.valueOf(count)),
+			++count);
 	}
 
 	@Reference(unbind = "-")

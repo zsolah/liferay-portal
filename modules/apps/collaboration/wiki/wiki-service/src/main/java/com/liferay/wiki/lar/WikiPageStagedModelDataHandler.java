@@ -25,15 +25,12 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.wiki.exportimport.content.processor.WikiPageExportImportContentProcessor;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -136,13 +133,6 @@ public class WikiPageStagedModelDataHandler
 
 		page.setContent(content);
 
-		Map<Long, Long> nodeIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				WikiNode.class);
-
-		long nodeId = MapUtil.getLong(
-			nodeIds, page.getNodeId(), page.getNodeId());
-
 		WikiPage importedPage = (WikiPage)page.clone();
 
 		WikiPage existingPage =
@@ -151,7 +141,7 @@ public class WikiPageStagedModelDataHandler
 
 		if (existingPage == null) {
 			importedPage = _stagedModelRepository.addStagedModel(
-				portletDataContext, page);
+				portletDataContext, importedPage);
 
 			if (portletDataContext.isDataStrategyMirror()) {
 				WikiPageResource pageResource =
@@ -171,21 +161,9 @@ public class WikiPageStagedModelDataHandler
 			}
 		}
 		else {
-			existingPage = fetchStagedModelByUuidAndGroupId(
-				page.getUuid(), portletDataContext.getScopeGroupId());
-
-			if (existingPage == null) {
-				existingPage = _wikiPageLocalService.fetchPage(
-					nodeId, page.getTitle(), page.getVersion());
-			}
-
-			if (existingPage == null) {
-				importedPage = _stagedModelRepository.updateStagedModel(
-					portletDataContext, page);
-			}
-			else {
-				importedPage = existingPage;
-			}
+			importedPage.setPageId(existingPage.getPageId());
+			importedPage = _stagedModelRepository.updateStagedModel(
+				portletDataContext, importedPage);
 		}
 
 		if (page.isHead()) {
