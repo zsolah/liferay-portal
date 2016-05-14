@@ -50,7 +50,9 @@ public class WikiPageStagedModelRepository extends BaseStagedModelRepository<Wik
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			page);
 
-		serviceContext.setUuid(page.getUuid());
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setUuid(page.getUuid());
+		}
 
 		return _wikiPageLocalService.addPage(
 			userId, nodeId, page.getTitle(), page.getVersion(),
