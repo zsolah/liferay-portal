@@ -19,18 +19,10 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.service.util.WikiServiceComponentProvider;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,6 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
+ * @author Zsolt Oláh
  */
 @Component(immediate = true, service = StagedModelDataHandler.class)
 public class WikiNodeStagedModelDataHandler
@@ -85,52 +78,22 @@ public class WikiNodeStagedModelDataHandler
 			PortletDataContext portletDataContext, WikiNode node)
 		throws Exception {
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			node);
-
 		WikiNode importedNode = (WikiNode)node.clone();
-
-		WikiServiceComponentProvider wikiServiceComponentProvider =
-			WikiServiceComponentProvider.getWikiServiceComponentProvider();
-
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			wikiServiceComponentProvider.getWikiGroupServiceConfiguration();
 
 		WikiNode existingNode = _stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 			node.getUuid(), portletDataContext.getScopeGroupId());
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			if (existingNode == null) {
-				serviceContext.setUuid(node.getUuid());
-
-				importedNode = _stagedModelRepository.addStagedModel(
-					portletDataContext, importedNode);
-			}
-			else {
+		if (existingNode != null) {
+			if (portletDataContext.isDataStrategyMirror()) {
 				importedNode.setNodeId(existingNode.getNodeId());
-				importedNode = _stagedModelRepository.updateStagedModel(
-					portletDataContext, importedNode);
 			}
+
+			importedNode = _stagedModelRepository.updateStagedModel(
+				portletDataContext, importedNode);
 		}
 		else {
-			String initialNodeName =
-				wikiGroupServiceConfiguration.initialNodeName();
-
-			if ((existingNode != null) &&
-				initialNodeName.equals(existingNode.getName())) {
-
-				importedNode.setNodeId(existingNode.getNodeId());
-				importedNode = _stagedModelRepository.updateStagedModel(
-					portletDataContext, importedNode);
-			}
-			else {
-				String nodeName = getNodeName(
-					portletDataContext, node, node.getName(), 2);
-
-				importedNode.setName(nodeName);
-				importedNode = _stagedModelRepository.addStagedModel(
-					portletDataContext, importedNode);
-			}
+			importedNode = _stagedModelRepository.addStagedModel(
+				portletDataContext, importedNode);
 		}
 
 		portletDataContext.importClassedModel(node, importedNode);
@@ -157,26 +120,6 @@ public class WikiNodeStagedModelDataHandler
 		}
 	}
 
-	protected String getNodeName(
-			PortletDataContext portletDataContext, WikiNode node, String name,
-			int count)
-		throws Exception {
-
-		WikiNode existingNode = _wikiNodeLocalService.fetchNode(
-			portletDataContext.getScopeGroupId(), name);
-
-		if (existingNode == null) {
-			return name;
-		}
-
-		String nodeName = node.getName();
-
-		return getNodeName(
-			portletDataContext, node,
-			nodeName.concat(StringPool.SPACE).concat(String.valueOf(count)),
-			++count);
-	}
-
 	protected StagedModelRepository<WikiNode> getStagedModelRepository() {
 		return _stagedModelRepository;
 	}
@@ -192,14 +135,6 @@ public class WikiNodeStagedModelDataHandler
 		_stagedModelRepository = stagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
 	private StagedModelRepository<WikiNode> _stagedModelRepository;
-	private WikiNodeLocalService _wikiNodeLocalService;
 
 }
