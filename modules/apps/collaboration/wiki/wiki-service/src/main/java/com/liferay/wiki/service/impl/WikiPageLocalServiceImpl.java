@@ -3209,10 +3209,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new PageTitleException();
 		}
 
-		if (isUsedTitle(nodeId, title)) {
-			throw new DuplicatePageException("{nodeId=" + nodeId + "}");
-		}
-
 		wikiPageTitleValidator.validate(title);
 
 		validate(nodeId, content, format);
