@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.List;
 
@@ -24,7 +23,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.wiki.model.WikiNode"},
 	service = StagedModelRepository.class
 )
-public class WikiNodeStagedModelRepository extends BaseStagedModelRepository<WikiNode> {
+public class WikiNodeStagedModelRepository
+	extends BaseStagedModelRepository<WikiNode> {
 
 	@Override
 	public WikiNode addStagedModel(PortletDataContext portletDataContext,
@@ -66,7 +66,7 @@ public class WikiNodeStagedModelRepository extends BaseStagedModelRepository<Wik
 
 	@Override
 	public void deleteStagedModels(PortletDataContext portletDataContext)
-			throws PortalException {
+		throws PortalException {
 
 		_wikiNodeLocalService.deleteNodes(portletDataContext.getScopeGroupId());
 	}
@@ -89,16 +89,14 @@ public class WikiNodeStagedModelRepository extends BaseStagedModelRepository<Wik
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-			PortletDataContext portletDataContext) {
+		PortletDataContext portletDataContext) {
 
 		return _wikiNodeLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
+			portletDataContext);
 	}
 
 	@Override
-	public WikiNode saveStagedModel(WikiNode node)
-			throws PortalException {
-
+	public WikiNode saveStagedModel(WikiNode node) throws PortalException {
 		return _wikiNodeLocalService.updateWikiNode(node);
 	}
 
@@ -107,7 +105,7 @@ public class WikiNodeStagedModelRepository extends BaseStagedModelRepository<Wik
 			WikiNode node) throws PortalException {
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-				node);
+			node);
 
 		return _wikiNodeLocalService.updateNode(
 				node.getNodeId(), node.getName(), node.getDescription(),
@@ -115,8 +113,8 @@ public class WikiNodeStagedModelRepository extends BaseStagedModelRepository<Wik
 	}
 
 	protected String getNodeName(
-			PortletDataContext portletDataContext, WikiNode node, String name,
-			int count) {
+		PortletDataContext portletDataContext, WikiNode node, String name,
+		int count) {
 
 		WikiNode existingNode = _wikiNodeLocalService.fetchNode(
 			portletDataContext.getScopeGroupId(), name);
@@ -134,11 +132,12 @@ public class WikiNodeStagedModelRepository extends BaseStagedModelRepository<Wik
 	}
 
 	@Reference(unbind = "-")
-	protected void setBlogsEntryLocalService(
+	protected void setWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
 
 		_wikiNodeLocalService = wikiNodeLocalService;
 	}
 
 	private WikiNodeLocalService _wikiNodeLocalService;
+
 }
