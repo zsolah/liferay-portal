@@ -537,6 +537,11 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public int getPagesCount(long nodeId, java.lang.String title, double version) {
+		return _wikiPageLocalService.getPagesCount(nodeId, title, version);
+	}
+
+	@Override
 	public int getPagesCount(long userId, long nodeId, int status) {
 		return _wikiPageLocalService.getPagesCount(userId, nodeId, status);
 	}
