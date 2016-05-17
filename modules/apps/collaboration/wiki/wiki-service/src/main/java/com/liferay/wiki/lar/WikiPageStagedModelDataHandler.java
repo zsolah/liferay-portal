@@ -161,19 +161,21 @@ public class WikiPageStagedModelDataHandler
 			importedPage = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedPage);
 
-			WikiPageResource pageResource =
-				_wikiPageResourceLocalService.getPageResource(
-					importedPage.getResourcePrimKey());
+			if (portletDataContext.isDataStrategyMirror()) {
+				WikiPageResource pageResource =
+					_wikiPageResourceLocalService.getPageResource(
+						importedPage.getResourcePrimKey());
 
-			String pageResourceUuid = GetterUtil.getString(
-				pageElement.attributeValue("page-resource-uuid"));
-
-			if (Validator.isNotNull(pageResourceUuid)) {
-				pageResource.setUuid(
+				String pageResourceUuid = GetterUtil.getString(
 					pageElement.attributeValue("page-resource-uuid"));
 
-				_wikiPageResourceLocalService.updateWikiPageResource(
-					pageResource);
+				if (Validator.isNotNull(pageResourceUuid)) {
+					pageResource.setUuid(
+						pageElement.attributeValue("page-resource-uuid"));
+
+					_wikiPageResourceLocalService.updateWikiPageResource(
+						pageResource);
+				}
 			}
 		}
 		else {
