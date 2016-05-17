@@ -1412,6 +1412,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getPagesCount(long nodeId, String title, double version) {
+		return wikiPagePersistence.countByN_T_V(nodeId, title, version);
+	}
+
+	@Override
 	public int getPagesCount(String format) {
 		return wikiPagePersistence.countByFormat(format);
 	}
