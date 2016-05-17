@@ -167,7 +167,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			user.getCompanyId(), node.getGroupId(), userId,
 			WikiPage.class.getName(), pageId, "text/" + format, content);
 
-		validate(title, nodeId, content, format);
+		validate(title, nodeId, content, format, version);
 
 		long resourcePrimKey =
 			wikiPageResourceLocalService.getPageResourcePrimKey(
@@ -2433,6 +2433,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
+	protected boolean isUsedTitle(long nodeId, String title, double version) {
+		if (getPagesCount(nodeId, title, version) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void moveDependentChildPagesFromTrash(
 			WikiPage newParentPage, long oldParentPageNodeId,
 			String oldParentPageTitle)
@@ -3207,14 +3216,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void validate(
-			String title, long nodeId, String content, String format)
+			String title, long nodeId, String content, String format,
+			double version)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
 			throw new PageTitleException();
 		}
 
-		if (isUsedTitle(nodeId, title)) {
+		if (isUsedTitle(nodeId, title, version)) {
 			throw new DuplicatePageException("{nodeId=" + nodeId + "}");
 		}
 
