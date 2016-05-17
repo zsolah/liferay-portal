@@ -497,6 +497,11 @@ public class WikiPageLocalServiceUtil {
 		return getService().getPagesCount(nodeId, title, head);
 	}
 
+	public static int getPagesCount(long nodeId, java.lang.String title,
+		double version) {
+		return getService().getPagesCount(nodeId, title, version);
+	}
+
 	public static int getPagesCount(long userId, long nodeId, int status) {
 		return getService().getPagesCount(userId, nodeId, status);
 	}

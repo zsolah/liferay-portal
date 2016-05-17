@@ -361,6 +361,9 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public int getPagesCount(long nodeId, java.lang.String title, boolean head);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPagesCount(long nodeId, java.lang.String title, double version);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPagesCount(long userId, long nodeId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
