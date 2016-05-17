@@ -26,17 +26,20 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.wiki.exportimport.content.processor.WikiPageExportImportContentProcessor;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 
 import java.io.InputStream;
+
 import java.util.List;
 import java.util.Map;
 
@@ -139,6 +142,21 @@ public class WikiPageStagedModelDataHandler
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				page.getUuid(), portletDataContext.getScopeGroupId());
 
+		if (existingPage == null && portletDataContext.isDataStrategyMirror()) {
+			Map<Long, Long> nodeIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					WikiNode.class);
+
+			long nodeId = MapUtil.getLong(
+				nodeIds, page.getNodeId(), page.getNodeId());
+
+			try {
+				existingPage = _wikiPageLocalService.getPage(
+					nodeId, page.getTitle(), page.getVersion());
+			} catch (Exception ex) {
+			}
+		}
+
 		if (existingPage == null) {
 			importedPage = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedPage);
@@ -228,6 +246,21 @@ public class WikiPageStagedModelDataHandler
 		pageIds.put(page.getPageId(), importedPage.getPageId());
 	}
 
+	protected StagedModelRepository<WikiPage> getStagedModelRepository() {
+		return _stagedModelRepository;
+	}
+
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.wiki.model.WikiPage)",
+		unbind = "-"
+	)
+	protected void setStagedModelRepository(
+		StagedModelRepository<WikiPage> stagedModelRepository) {
+
+		_stagedModelRepository = stagedModelRepository;
+	}
+
 	@Reference(unbind = "-")
 	protected void setWikiPageExportImportContentProcessor(
 		WikiPageExportImportContentProcessor
@@ -251,28 +284,13 @@ public class WikiPageStagedModelDataHandler
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}
 
-	protected StagedModelRepository<WikiPage> getStagedModelRepository() {
-		return _stagedModelRepository;
-	}
-
-	@Reference(
-		target =
-			"(model.class.name=com.liferay.wiki.model.WikiPage)",
-		unbind = "-"
-	)
-	protected void setStagedModelRepository(
-		StagedModelRepository<WikiPage> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageStagedModelDataHandler.class);
 
+	private StagedModelRepository<WikiPage> _stagedModelRepository;
 	private WikiPageExportImportContentProcessor
 		_wikiPageExportImportContentProcessor;
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
-	private StagedModelRepository<WikiPage> _stagedModelRepository;
 
 }

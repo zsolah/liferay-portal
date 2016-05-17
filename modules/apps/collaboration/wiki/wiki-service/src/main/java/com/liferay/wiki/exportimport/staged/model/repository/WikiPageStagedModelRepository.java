@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.wiki.model.WikiPage"},
 	service = StagedModelRepository.class
 )
-public class WikiPageStagedModelRepository extends BaseStagedModelRepository<WikiPage> {
+public class WikiPageStagedModelRepository
+	extends BaseStagedModelRepository<WikiPage> {
 
 	@Override
 	public WikiPage addStagedModel(
@@ -45,7 +46,7 @@ public class WikiPageStagedModelRepository extends BaseStagedModelRepository<Wik
 					WikiNode.class);
 
 		long nodeId = MapUtil.getLong(
-				nodeIds, page.getNodeId(), page.getNodeId());
+			nodeIds, page.getNodeId(), page.getNodeId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			page);
@@ -59,12 +60,6 @@ public class WikiPageStagedModelRepository extends BaseStagedModelRepository<Wik
 			page.getContent(), page.getSummary(), page.isMinorEdit(),
 			page.getFormat(), page.getHead(), page.getParentTitle(),
 			page.getRedirectTitle(), serviceContext);
-
-	}
-
-	@Override
-	public void deleteStagedModel(WikiPage page) throws PortalException {
-		_wikiPageLocalService.deletePage(page);
 	}
 
 	@Override
@@ -88,11 +83,15 @@ public class WikiPageStagedModelRepository extends BaseStagedModelRepository<Wik
 	}
 
 	@Override
+	public void deleteStagedModel(WikiPage page) throws PortalException {
+		_wikiPageLocalService.deletePage(page);
+	}
+
+	@Override
 	public void deleteStagedModels(PortletDataContext portletDataContext)
-			throws PortalException {
+		throws PortalException {
 
 		_wikiPageLocalService.deletePages(portletDataContext.getScopeGroupId());
-
 	}
 
 	@Override
@@ -114,16 +113,14 @@ public class WikiPageStagedModelRepository extends BaseStagedModelRepository<Wik
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-			PortletDataContext portletDataContext) {
+		PortletDataContext portletDataContext) {
 
 		return _wikiPageLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
+			portletDataContext);
 	}
 
 	@Override
-	public WikiPage saveStagedModel(WikiPage page)
-			throws PortalException {
-
+	public WikiPage saveStagedModel(WikiPage page) throws PortalException {
 		return _wikiPageLocalService.updateWikiPage(page);
 	}
 
@@ -138,16 +135,15 @@ public class WikiPageStagedModelRepository extends BaseStagedModelRepository<Wik
 				WikiNode.class);
 
 		long nodeId = MapUtil.getLong(
-				nodeIds, page.getNodeId(), page.getNodeId());
+			nodeIds, page.getNodeId(), page.getNodeId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-				page);
+			page);
 
 		return _wikiPageLocalService.updatePage(
 			userId, nodeId, page.getTitle(), 0.0, page.getContent(),
 			page.getSummary(), page.isMinorEdit(), page.getFormat(),
-			page.getParentTitle(), page.getRedirectTitle(),
-			serviceContext);
+			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 	}
 
 	protected void doRestoreStagedModel(
@@ -172,19 +168,20 @@ public class WikiPageStagedModelRepository extends BaseStagedModelRepository<Wik
 	}
 
 	@Reference(unbind = "-")
-	protected void setWikiPageResourceLocalService(
-		WikiPageResourceLocalService wikiPageResourceLocalService) {
-
-		_wikiPageResourceLocalService = wikiPageResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageResourceLocalService(
+		WikiPageResourceLocalService wikiPageResourceLocalService) {
+
+		_wikiPageResourceLocalService = wikiPageResourceLocalService;
+	}
+
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
+
 }

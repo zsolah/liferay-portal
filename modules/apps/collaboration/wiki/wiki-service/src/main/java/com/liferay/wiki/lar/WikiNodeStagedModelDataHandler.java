@@ -22,6 +22,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeLocalService;
 
 import java.util.Map;
 
@@ -80,8 +81,14 @@ public class WikiNodeStagedModelDataHandler
 
 		WikiNode importedNode = (WikiNode)node.clone();
 
-		WikiNode existingNode = _stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-			node.getUuid(), portletDataContext.getScopeGroupId());
+		WikiNode existingNode =
+			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+				node.getUuid(), portletDataContext.getScopeGroupId());
+
+		if (existingNode == null && portletDataContext.isDataStrategyMirror()) {
+			existingNode = _wikiNodeLocalService.fetchNode(
+				portletDataContext.getScopeGroupId(), node.getName());
+		}
 
 		if (existingNode != null) {
 			if (portletDataContext.isDataStrategyMirror()) {
@@ -106,8 +113,9 @@ public class WikiNodeStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(node.getUserUuid());
 
-		WikiNode existingNode = _stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-			node.getUuid(), portletDataContext.getScopeGroupId());
+		WikiNode existingNode =
+			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+				node.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingNode == null) || !existingNode.isInTrash()) {
 			return;
@@ -135,6 +143,14 @@ public class WikiNodeStagedModelDataHandler
 		_stagedModelRepository = stagedModelRepository;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
 	private StagedModelRepository<WikiNode> _stagedModelRepository;
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }
