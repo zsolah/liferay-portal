@@ -3094,6 +3094,61 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			workflowContext);
 	}
 
+	public WikiPage updatePage(
+			WikiPage newPage, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(newPage.getUserId());
+
+		long pageId = 0;
+
+		newPage.setContent(SanitizerUtil.sanitize(
+			user.getCompanyId(), newPage.getGroupId(), newPage.getUserId(),
+			WikiPage.class.getName(), pageId, "text/" + newPage.getFormat(),
+			newPage.getContent()));
+
+		validate(newPage.getNodeId(), newPage.getContent(),
+			newPage.getFormat());
+
+		long resourcePrimKey =
+				wikiPageResourceLocalService.getPageResourcePrimKey(
+					newPage.getGroupId(), newPage.getNodeId(),
+					newPage.getTitle());
+
+		newPage.setResourcePrimKey(resourcePrimKey);
+
+		ExpandoBridgeUtil.setExpandoBridgeAttributes(
+			newPage.getExpandoBridge(), newPage.getExpandoBridge(),
+			serviceContext);
+
+		wikiPagePersistence.update(newPage);
+
+		// Node
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(
+			newPage.getNodeId());
+
+		node.setLastPostDate(serviceContext.getModifiedDate(
+			newPage.getModifiedDate()));
+
+		wikiNodePersistence.update(node);
+
+		// Asset
+
+		updateAsset(
+			newPage.getUserId(), newPage, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
+
+		// Workflow
+
+		newPage = startWorkflowInstance(newPage.getUserId(), newPage,
+			serviceContext);
+
+		return newPage;
+	}
+
 	protected WikiPage updatePage(
 			long userId, WikiPage oldPage, long newNodeId, String newTitle,
 			String content, String summary, boolean minorEdit, String format,

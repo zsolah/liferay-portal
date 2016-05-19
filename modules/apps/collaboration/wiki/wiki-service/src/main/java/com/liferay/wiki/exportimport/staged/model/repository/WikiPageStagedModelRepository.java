@@ -140,10 +140,9 @@ public class WikiPageStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			page);
 
-		return _wikiPageLocalService.updatePage(
-			userId, nodeId, page.getTitle(), 0.0, page.getContent(),
-			page.getSummary(), page.isMinorEdit(), page.getFormat(),
-			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
+		page.setUserId(userId);
+		page.setNodeId(nodeId);
+		return _wikiPageLocalService.updatePage(page, serviceContext);
 	}
 
 	protected void doRestoreStagedModel(

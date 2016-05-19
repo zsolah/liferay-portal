@@ -179,6 +179,7 @@ public class WikiPageStagedModelDataHandler
 			}
 		}
 		else {
+			importedPage.setUuid(existingPage.getUuid());
 			importedPage.setPageId(existingPage.getPageId());
 			importedPage = _stagedModelRepository.updateStagedModel(
 				portletDataContext, importedPage);

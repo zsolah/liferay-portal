@@ -38,6 +38,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
+import com.liferay.wiki.service.impl.WikiPageLocalServiceImpl;
 import com.liferay.wiki.util.test.WikiTestUtil;
 import com.liferay.wiki.web.lar.WikiPortletDataHandler;
 
@@ -115,7 +116,7 @@ public class WikiExportImportTest extends BasePortletExportImportTestCase {
 		WikiPage page = (WikiPage)stagedModel;
 
 		return WikiTestUtil.updatePage(
-			page, page.getUserId(), RandomTestUtil.randomString(),
+			page, page.getUserId(), page.getTitle(),
 			page.getContent(), true,
 			ServiceContextTestUtil.getServiceContext());
 	}
