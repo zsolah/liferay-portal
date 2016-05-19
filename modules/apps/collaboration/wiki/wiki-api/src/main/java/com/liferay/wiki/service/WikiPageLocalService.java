@@ -290,6 +290,9 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String title, double version, ServiceContext serviceContext)
 		throws PortalException;
 
+	public WikiPage updatePage(WikiPage newPage, ServiceContext serviceContext)
+		throws PortalException;
+
 	public WikiPage updatePage(long userId, long nodeId,
 		java.lang.String title, double version, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,

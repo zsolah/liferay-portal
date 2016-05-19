@@ -411,6 +411,14 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiPage updatePage(
+		com.liferay.wiki.model.WikiPage newPage,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.updatePage(newPage, serviceContext);
+	}
+
+	@Override
 	public com.liferay.wiki.model.WikiPage updatePage(long userId, long nodeId,
 		java.lang.String title, double version, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,
